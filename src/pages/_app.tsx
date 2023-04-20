@@ -1,5 +1,14 @@
-import type { AppProps } from 'next/app'
+import type {AppProps} from 'next/app'
+import {ThemeProvider} from "@mui/system";
+import {CssBaseline} from "@mui/material";
 
-export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />
+import theme from "@/lib/mui";
+
+export default function App({Component, pageProps}: AppProps) {
+    return <>
+        <ThemeProvider theme={theme}>
+            <Component {...pageProps} />
+            <CssBaseline/>
+        </ThemeProvider>
+    </>
 }
