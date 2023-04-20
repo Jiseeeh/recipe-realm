@@ -10,9 +10,6 @@ const theme = createTheme({
         },
     },
     components: {
-        MuiTypography: {
-            defaultProps: {color: "#fff"}
-        },
         MuiOutlinedInput: {
             styleOverrides: {
                 root: {
