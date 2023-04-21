@@ -1,4 +1,5 @@
 import {ReactNode, useState} from "react";
+import {useRouter} from "next/router";
 import {CSSObject, styled, Theme, useTheme} from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiAppBar, {AppBarProps as MuiAppBarProps} from '@mui/material/AppBar';
@@ -99,6 +100,7 @@ interface SidebarProps {
 
 export default function Sidebar({children}: SidebarProps) {
     const theme = useTheme();
+    const router = useRouter();
     const [open, setOpen] = useState(false);
 
     const handleDrawerOpen = () => {
@@ -141,7 +143,10 @@ export default function Sidebar({children}: SidebarProps) {
                     </DrawerHeader>
                     <Divider/>
                     <List>
-                        <ListItem disablePadding sx={{display: 'block'}}>
+                        <ListItem disablePadding sx={{
+                            display: 'block',
+                            backgroundColor: `${router.pathname === "/realm" ? theme.palette.secondary.main : ""}`
+                        }}>
                             <ListItemButton
                                 sx={{
                                     minHeight: 48,
@@ -160,26 +165,30 @@ export default function Sidebar({children}: SidebarProps) {
                                 </ListItemIcon>
                                 <ListItemText primary="Home" sx={{opacity: open ? 1 : 0}}/>
                             </ListItemButton>
-                        </ListItem><ListItem disablePadding sx={{display: 'block'}}>
-                        <ListItemButton
-                            sx={{
-                                minHeight: 48,
-                                justifyContent: open ? 'initial' : 'center',
-                                px: 2.5,
-                            }}
-                        >
-                            <ListItemIcon
+                        </ListItem>
+                        <ListItem disablePadding sx={{
+                            display: 'block',
+                            backgroundColor: `${router.pathname === "/recipe/create" ? theme.palette.secondary.main : ""}`
+                        }}>
+                            <ListItemButton
                                 sx={{
-                                    minWidth: 0,
-                                    mr: open ? 3 : 'auto',
-                                    justifyContent: 'center',
+                                    minHeight: 48,
+                                    justifyContent: open ? 'initial' : 'center',
+                                    px: 2.5,
                                 }}
                             >
-                                <BorderColorIcon sx={{color: `#${iconColor}`}}/>
-                            </ListItemIcon>
-                            <ListItemText primary="Create" sx={{opacity: open ? 1 : 0}}/>
-                        </ListItemButton>
-                    </ListItem>
+                                <ListItemIcon
+                                    sx={{
+                                        minWidth: 0,
+                                        mr: open ? 3 : 'auto',
+                                        justifyContent: 'center',
+                                    }}
+                                >
+                                    <BorderColorIcon sx={{color: `#${iconColor}`}}/>
+                                </ListItemIcon>
+                                <ListItemText primary="Create" sx={{opacity: open ? 1 : 0}}/>
+                            </ListItemButton>
+                        </ListItem>
                     </List>
                     <Divider/>
                 </Drawer>
