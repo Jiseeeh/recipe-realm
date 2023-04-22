@@ -45,7 +45,7 @@ export default function Realm() {
 
                     {data.map(recipe => (
                         <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={2}>
-                            <RecipeCard imageLink={recipe.imageLink}
+                            <RecipeCard id={String(recipe.id)} author="" ingredients="" imageLink={recipe.imageLink}
                                         title={recipe.title}
                                         description={recipe.description}/>
                         </Grid>))}
