@@ -3,6 +3,7 @@ import {ThemeProvider} from "@mui/system";
 import {CssBaseline} from "@mui/material";
 
 import theme from "@/lib/mui";
+import "@/components/loader.css";
 
 export default function App({Component, pageProps}: AppProps) {
     return <>
