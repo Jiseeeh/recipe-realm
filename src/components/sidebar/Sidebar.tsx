@@ -163,6 +163,9 @@ export default function Sidebar({children}: SidebarProps) {
                                         : ""
                                 }`,
                             }}
+                            onClick={() => {
+                                if (router.pathname !== "/realm") router.push("/realm");
+                            }}
                         >
                             <ListItemButton
                                 sx={{
@@ -192,6 +195,9 @@ export default function Sidebar({children}: SidebarProps) {
                                         ? theme.palette.secondary.main
                                         : ""
                                 }`,
+                            }}
+                            onClick={() => {
+                                if (router.pathname !== "/recipe/create") router.push("/recipe/create");
                             }}
                         >
                             <ListItemButton
