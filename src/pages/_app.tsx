@@ -11,7 +11,7 @@ export default function App({Component, pageProps}: AppProps) {
         <ThemeProvider theme={theme}>
             <Component {...pageProps} />
             <CssBaseline/>
-            <Toaster/>
+            <Toaster toastOptions={{position: 'bottom-left'}}/>
         </ThemeProvider>
     </>
 }
