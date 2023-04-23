@@ -2,8 +2,8 @@ type Recipe = {
     id: string;
     private_id:string;
     title: string;
-    author: string;
-    imageLink: string;
+    author_name: string;
+    image_link: string;
     description: string;
     ingredients: string;
 }
