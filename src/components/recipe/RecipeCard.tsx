@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 
 import Recipe from "@/types/recipe";
 
-export default function RecipeCard({id, imageLink, title, description}: Recipe) {
+export default function RecipeCard({id, image_link, title, description}: Recipe) {
     const theme = useTheme();
     const router = useRouter();
 
@@ -15,7 +15,7 @@ export default function RecipeCard({id, imageLink, title, description}: Recipe) 
 
     return <Card sx={{maxWidth: 280}}>
         <CardActionArea>
-            <CardMedia component="img" image={imageLink} alt="Recipe Image"/>
+            <CardMedia component="img" image={image_link} alt="Recipe Image"/>
         </CardActionArea>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div" sx={{
