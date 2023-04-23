@@ -15,7 +15,7 @@ export default function RecipeCard({id, image_link, title, description}: Recipe)
 
     return <Card sx={{maxWidth: 280}}>
         <CardActionArea>
-            <CardMedia component="img" image={image_link} alt="Recipe Image"/>
+            <CardMedia component="img" image={image_link} alt="Recipe Image" sx={{height:300}} />
         </CardActionArea>
         <CardContent>
             <Typography gutterBottom variant="h5" component="div" sx={{
