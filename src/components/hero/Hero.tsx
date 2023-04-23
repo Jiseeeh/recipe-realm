@@ -9,14 +9,28 @@ const inputColor = 'f5f5f7';
 export default function Hero() {
     const theme = useTheme();
     const router = useRouter();
-    const [username, setUsername] = useState<string>("");
+    const [username, setUsername] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const onSubmit = async (e:FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
+        if (isSubmitting) return;
+
+        if (!username) {
+            toast.error("Username is empty!");
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        const toastId = toast.loading("Checking")
+
         const res = await axios.post("http://localhost:3001/api/user",{
             username
         })
+
+        toast.dismiss(toastId);
 
         if (!res.data.success) {
             toast.error("Something went wrong!");
@@ -24,7 +38,7 @@ export default function Hero() {
         }
 
         toast.success("Welcome");
-        await router.push("/realm");
+        router.push("/realm");
     };
     return <Box sx={{
         minHeight: '100vh',
@@ -61,7 +75,7 @@ export default function Hero() {
                 }} value={username} onChange={(e) => {
                     setUsername(e.target.value)
                 }}/>
-                <Button variant="contained" sx={{color: theme.palette.secondary.main}}>Enter</Button>
+                <Button variant="contained" type="submit" sx={{color: theme.palette.secondary.main}}>Enter</Button>
             </Box>
         </Box>
     </Box>
