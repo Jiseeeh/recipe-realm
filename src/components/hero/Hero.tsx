@@ -37,7 +37,12 @@ export default function Hero() {
             return;
         }
 
-        localStorage.setItem('username',username);
+        const user = {
+            id: res.data.id,
+            username:res.data.username,
+        };
+
+        localStorage.setItem('user',JSON.stringify(user));
         toast.success("Welcome");
         router.push("/realm");
     };
