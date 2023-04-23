@@ -37,6 +37,7 @@ export default function Hero() {
             return;
         }
 
+        localStorage.setItem('username',username);
         toast.success("Welcome");
         router.push("/realm");
     };
