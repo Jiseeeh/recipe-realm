@@ -1,6 +1,6 @@
 import {Box, Button, TextField, Typography} from "@mui/material";
 import {useTheme} from "@mui/system";
-import {FormEvent, useState} from "react";
+import {FormEvent, useState,useEffect} from "react";
 import {useRouter} from "next/router";
 import axios from "axios";
 import toast from "react-hot-toast";
@@ -46,6 +46,11 @@ export default function Hero() {
         toast.success("Welcome");
         router.push("/realm");
     };
+
+    useEffect(() => {
+        if (localStorage.getItem("user") !== null) router.push("/realm");
+    },[])
+
     return <Box sx={{
         minHeight: '100vh',
         background: 'url("/sushi-med.jpg")',
