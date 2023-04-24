@@ -1,4 +1,12 @@
-import { Box, TextField, Button, Typography, Container } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Container,
+  Modal,
+  Tooltip,
+} from "@mui/material";
 import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -7,6 +15,7 @@ import axios from "axios";
 
 import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
+import modalStyle from "@/constants/modalStyle";
 
 export default function Create() {
   const theme = useTheme();
@@ -16,8 +25,10 @@ export default function Create() {
   const [recipeIngredients, setRecipeIngredients] = useState("");
   const [recipeDescription, setRecipeDescription] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [privateId, setPrivateId] = useState("");
 
   const [isEditMode, setIsEditMode] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onEditRecipe = async () => {};
 
@@ -58,11 +69,9 @@ export default function Create() {
       return;
     }
 
-    toast.success("Recipe created!");
-
-    setTimeout(() => {
-      router.push("/realm");
-    }, 800);
+    setPrivateId(res.data.uuid);
+    setIsModalOpen(true);
+    toast.success("Recipe Created!");
   };
 
   useEffect(() => {
@@ -146,6 +155,26 @@ export default function Create() {
             )}
           </Box>
         </Container>
+        {/* MODAL */}
+        <Modal
+          open={isModalOpen}
+          onClose={() => {
+            setIsModalOpen(false);
+            router.push("/realm");
+          }}
+        >
+          <Box sx={modalStyle}>
+            <Typography variant="h6" component="h2">
+              Keep this because you need this in order to{" "}
+              <strong>update/delete</strong> your recipe!
+            </Typography>
+            <Tooltip title="Never share this to anyone!" placement="top">
+              <Typography variant="body1" component="span" fontWeight="bold">
+                {privateId}
+              </Typography>
+            </Tooltip>
+          </Box>
+        </Modal>
       </Sidebar>
     </>
   );
