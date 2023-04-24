@@ -26,7 +26,7 @@ export default function Hero() {
 
         const toastId = toast.loading("Checking")
 
-        const res = await axios.post("http://localhost:3001/api/user",{
+        const res = await axios.post(`${process.env.API}/user`,{
             username
         })
 

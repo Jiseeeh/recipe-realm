@@ -49,7 +49,7 @@ export default function Create() {
       recipeDescription,
     };
 
-    const res = await axios.post("http://localhost:3001/api/recipe", data);
+    const res = await axios.post(`${process.env.API}/recipe`, data);
     toast.dismiss(toastId);
     setIsSubmitting(false);
 

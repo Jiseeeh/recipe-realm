@@ -15,7 +15,7 @@ export default function Realm() {
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get("http://localhost:3001/api/recipe");
+      const res = await axios.get(`${process.env.API}/recipe`);
 
       if (res.status !== 200) {
         toast.error("Error fetching, please try again later.");
