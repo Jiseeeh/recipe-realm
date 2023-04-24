@@ -40,7 +40,7 @@ export default function Realm() {
                     author_name={recipe.author_name}
                     ingredients={recipe.ingredients}
                     image_link={recipe.image_link}
-                    title={recipe.title}
+                    name={recipe.name}
                     description={recipe.description}
                     private_id={recipe.private_id}
                   />
