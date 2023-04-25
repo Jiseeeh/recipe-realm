@@ -106,7 +106,7 @@ export default function Recipe() {
                         }}
                     />
                     {/* CHIPS */}
-                    <Box sx={{display: "flex", gap: 1.5, flexWrap: "wrap"}}>
+                    <Box sx={{display: "flex", gap: 1.5, flexWrap: "wrap",maxHeight:200,overflowY:'auto'}}>
                         {recipe.ingredients.split("\n").map((ingredient,index) => {
                             if (ingredient.length > 16) {
                                 return <Tooltip title={ingredient}>
