@@ -1,5 +1,5 @@
 import {useEffect, useState} from "react";
-import {Box, Button, Chip, Fade, Modal, TextField, Typography} from "@mui/material";
+import {Box, Button, Chip, Fade, Modal, TextField, Typography,Tooltip} from "@mui/material";
 import {useTheme} from "@mui/system";
 import {useRouter} from "next/router";
 import { toast } from "react-hot-toast";
@@ -105,8 +105,24 @@ export default function Recipe() {
                             objectFit: "cover",
                         }}
                     />
+                    {/* CHIPS */}
                     <Box sx={{display: "flex", gap: 1.5, flexWrap: "wrap"}}>
-                        {recipe.ingredients.split("\n").map((ingredient,index) => (<Chip key={index} label={ingredient} color="secondary"/>))}
+                        {recipe.ingredients.split("\n").map((ingredient,index) => {
+                            if (ingredient.length > 16) {
+                                return <Tooltip title={ingredient}>
+                                    <Chip key={index} label={ingredient} color="secondary" sx={{
+                                        WebkitLineClamp: 1,
+                                        overflow: 'hidden',
+                                        width:100,
+                                    }}/>
+                                </Tooltip>
+                            }
+                            else return (<Chip key={index} label={ingredient} color="secondary" sx={{
+                                WebkitLineClamp: 1,
+                                overflow: 'hidden',
+                                width:100,
+                            }}/>)
+                        })}
                     </Box>
                     <Typography paragraph>
                         {recipe.description}
