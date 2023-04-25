@@ -53,7 +53,7 @@ export default function Create() {
     }
 
     toast.success("Update success!");
-    router.push("realm");
+    router.push("/realm");
   };
 
   // CREATE RECIPE
