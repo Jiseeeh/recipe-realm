@@ -5,7 +5,7 @@ import {useRouter} from "next/router";
 
 import Recipe from "@/types/recipe";
 
-export default function RecipeCard({id, image_link, title, description}: Recipe) {
+export default function RecipeCard({id, image_link, name, description}: Recipe) {
     const theme = useTheme();
     const router = useRouter();
 
@@ -23,7 +23,7 @@ export default function RecipeCard({id, image_link, title, description}: Recipe)
                 WebkitLineClamp: 1,
                 WebkitBoxOrient: 'vertical',
                 overflow: 'hidden'
-            }}>{title}</Typography>
+            }}>{name}</Typography>
             <Typography variant="body2" sx={{
                 display: '-webkit-box',
                 WebkitLineClamp: 4,
