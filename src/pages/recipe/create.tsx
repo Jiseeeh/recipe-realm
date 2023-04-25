@@ -48,11 +48,11 @@ export default function Create() {
     toast.dismiss(toastId);
 
     if (!res.data.success) {
-      toast.error("That didn't load right!");
+      toast.error(res.data.message);
       return;
     }
 
-    toast.success("Update success!");
+    toast.success(res.data.message);
     router.push("/realm");
   };
 
