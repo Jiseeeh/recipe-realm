@@ -52,7 +52,14 @@ export default function Recipe() {
     };
 
     const onUpdate = () => {
+        if (privateId !== recipe?.private_id) {
+            toast.error("Private ID does not match.");
+            return;
+        }
 
+        // push to create page with values of this recipe
+        // replace all \n in ingredients to transmit \n to the new page
+        router.push(`/recipe/create?recipeName=${recipe.name}&imageLink=${recipe.image_link}&recipeIngredients=${recipe.ingredients.replaceAll("\n","%0A")}&recipeDescription=${recipe.description}&id=${router.query.id}`);
     };
 
     const onModify = () => {
@@ -68,7 +75,6 @@ export default function Recipe() {
                 toast.error("Error fetching, please try again later.");
                 return;
             }
-            
             setRecipe(res.data);
             setIsLoading(false);
         })()
