@@ -49,7 +49,7 @@ export default function Hero() {
 
     useEffect(() => {
         if (localStorage.getItem("user") !== null) router.push("/realm");
-    },[])
+    },[router])
 
     return <Box sx={{
         minHeight: '100vh',

@@ -78,7 +78,7 @@ export default function Recipe() {
             setRecipe(res.data);
             setIsLoading(false);
         })()
-    },[]);
+    },[router.query]);
 
     if (!isLoading && recipe) {
         return (
@@ -109,7 +109,7 @@ export default function Recipe() {
                     <Box sx={{display: "flex", gap: 1.5, flexWrap: "wrap",maxHeight:200,overflowY:'auto'}}>
                         {recipe.ingredients.split("\n").map((ingredient,index) => {
                             if (ingredient.length > 16) {
-                                return <Tooltip title={ingredient}>
+                                return <Tooltip title={ingredient} key={index}>
                                     <Chip key={index} label={ingredient} color="secondary" sx={{
                                         WebkitLineClamp: 1,
                                         overflow: 'hidden',
