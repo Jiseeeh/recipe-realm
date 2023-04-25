@@ -8,6 +8,8 @@ import {
   TextField,
   Typography,
   Tooltip,
+  Container,
+  Grid,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
@@ -99,7 +101,7 @@ export default function Recipe() {
   if (!isLoading && recipe) {
     return (
       <Sidebar>
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+        <Container sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Box
             sx={{
               display: "flex",
@@ -122,11 +124,12 @@ export default function Recipe() {
             }}
           />
           {/* CHIPS */}
-          <Box
+          <Grid
+            container
+            spacing={{ xs: 1, md: 2 }}
+            textAlign="center"
+            flexWrap="wrap"
             sx={{
-              display: "flex",
-              gap: 1.5,
-              flexWrap: "wrap",
               maxHeight: 200,
               overflowY: "auto",
             }}
@@ -135,8 +138,23 @@ export default function Recipe() {
               if (ingredient.length > 16) {
                 return (
                   <Tooltip title={ingredient} key={index}>
+                    <Grid key={index} item xs={6} sm={2}>
+                      <Chip
+                        label={ingredient}
+                        color="secondary"
+                        sx={{
+                          WebkitLineClamp: 1,
+                          overflow: "hidden",
+                          width: 100,
+                        }}
+                      />
+                    </Grid>
+                  </Tooltip>
+                );
+              } else
+                return (
+                  <Grid key={index} item xs={6} sm={2}>
                     <Chip
-                      key={index}
                       label={ingredient}
                       color="secondary"
                       sx={{
@@ -145,23 +163,10 @@ export default function Recipe() {
                         width: 100,
                       }}
                     />
-                  </Tooltip>
-                );
-              } else
-                return (
-                  <Chip
-                    key={index}
-                    label={ingredient}
-                    color="secondary"
-                    sx={{
-                      WebkitLineClamp: 1,
-                      overflow: "hidden",
-                      width: 100,
-                    }}
-                  />
+                  </Grid>
                 );
             })}
-          </Box>
+          </Grid>
           <Typography paragraph>{recipe.description}</Typography>
           <Box sx={{ marginLeft: "auto" }}>
             <Button
@@ -172,7 +177,7 @@ export default function Recipe() {
               Modify
             </Button>
           </Box>
-        </Box>
+        </Container>
         <Modal open={isModalOpen} onClose={handleModalClose}>
           <Fade in={isModalOpen}>
             <Box sx={modalStyle}>
