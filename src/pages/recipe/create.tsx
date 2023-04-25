@@ -37,7 +37,7 @@ export default function Create() {
     const toastId = toast.loading("Updating your recipe");
 
     setIsSubmitting(true);
-    const res = await axios.patch(`${process.env.API}/recipe/${id}?recipeName=${recipeName}&imageLink=${imageLink}&recipeIngredients=${recipeIngredients}&recipeDescription=${recipeDescription}`);
+    const res = await axios.patch(`${process.env.API}/recipe/${id}?recipeName=${recipeName}&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll("\n","%0A")}&recipeDescription=${recipeDescription}`);
     setIsSubmitting(false);
 
     toast.dismiss(toastId);
@@ -71,7 +71,8 @@ export default function Create() {
 
     user = JSON.parse(String(localStorage.getItem("user")));
 
-    const res = await axios.post(`${process.env.API}/recipe?recipeName=${recipeName}&authorId=${user.id}&authorName=${user.username}&imageLink=${imageLink}&recipeIngredients=${recipeIngredients}&recipeDescription=${recipeDescription}`);
+    const res = await axios.post(`${process.env.API}/recipe?recipeName=${recipeName}&authorId=${user.id}&authorName=${user.username}&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll("\n","%0A")}&recipeDescription=${recipeDescription}`);
+    console.log({recipeIngredients});
     toast.dismiss(toastId);
     setIsSubmitting(false);
 
