@@ -13,6 +13,7 @@ import modalStyle from "@/constants/modalStyle";
 
 export default function Recipe() {
     const [isLoading, setIsLoading] = useState(true);
+    const [isSubmitting, setIsSubmitting] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [privateId, setPrivateId] = useState("");
     const [recipe, setRecipe] = useState<IRecipe | null>(null);
@@ -26,11 +27,35 @@ export default function Recipe() {
         setIsModalOpen(false);
     }
 
-    // TODO add logic to delete and update
-    const onDelete = () => {
-        handleModalOpen();
+    const onDelete = async () => {
+        if (privateId !== recipe?.private_id) {
+            toast.error("Private ID does not match.");
+            return;
+        }
+        
+        const toastId = toast.loading("Deleting this recipe");
+        setIsSubmitting(true);
+
+        const res = await axios.delete(`${process.env.API}/recipe/${privateId}`);
+
+        toast.dismiss(toastId);
+        setIsSubmitting(false);
+
+        if (!res.data.success) {
+            toast.error(res.data.message);
+            return;
+        }
+
+        toast.success(res.data.message);
+
+        router.push("/realm");
     };
-    const onEdit = () => {
+
+    const onUpdate = () => {
+
+    };
+
+    const onModify = () => {
         handleModalOpen();
     };
 
@@ -81,13 +106,12 @@ export default function Recipe() {
                         {recipe.description}
                     </Typography>
                     <Box sx={{marginLeft: "auto"}}>
-                        <Button onClick={onDelete}>Delete</Button>
                         <Button
-                            onClick={onEdit}
+                            onClick={onModify}
                             variant="contained"
                             sx={{color: `${theme.palette.secondary.main}`}}
                         >
-                            Edit
+                            Modify
                         </Button>
                     </Box>
                 </Box>
@@ -103,7 +127,10 @@ export default function Recipe() {
                                        onChange={(e) => {
                                            setPrivateId(e.target.value)
                                        }}/>
-                            <Button variant="contained" sx={{color: `${theme.palette.secondary.main}`}}>Submit</Button>
+                            <Box sx={{display:'flex' , gap:1.5,marginLeft:'auto'}}>
+                                <Button  disabled={isSubmitting} sx={{color: `${theme.palette.secondary.main}`}} onClick={onDelete}>Delete</Button>
+                                <Button variant="contained" disabled={isSubmitting} sx={{color: `${theme.palette.secondary.main}`}} onClick={onUpdate}>Update</Button>
+                            </Box>
                         </Box>
                     </Fade>
                 </Modal>
