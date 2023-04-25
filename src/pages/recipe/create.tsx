@@ -30,8 +30,33 @@ export default function Create() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const onEditRecipe = async () => {};
+  // UPDATE RECIPE
+  const onUpdateRecipe = async () => {
+    const { id } = router.query;
 
+    const toastId = toast.loading("Updating your recipe");
+
+    setIsSubmitting(true);
+    const res = await axios.patch(`${process.env.API}/recipe/${id}`, {
+      recipeName,
+      imageLink,
+      recipeIngredients: recipeIngredients,
+      recipeDescription,
+    });
+    setIsSubmitting(false);
+
+    toast.dismiss(toastId);
+
+    if (!res.data.success) {
+      toast.error("That didn't load right!");
+      return;
+    }
+
+    toast.success("Update success!");
+    router.push("realm");
+  };
+
+  // CREATE RECIPE
   const onCreateRecipe = async () => {
     if (!recipeName || !imageLink || !recipeIngredients || !recipeDescription) {
       toast.error("Do not leave empty fields!");
@@ -74,10 +99,18 @@ export default function Create() {
     toast.success("Recipe Created!");
   };
 
+  // set default values for update mode
   useEffect(() => {
     if (Object.keys(router.query).length > 0) {
-      console.log(router.query);
+      const { recipeName, imageLink, recipeIngredients, recipeDescription } =
+        router.query;
+
       setIsEditMode(true);
+
+      setRecipeName(recipeName as string);
+      setImageLink(imageLink as string);
+      setRecipeIngredients(recipeIngredients as string);
+      setRecipeDescription(recipeDescription as string);
     }
   }, [router.query]);
 
@@ -136,6 +169,8 @@ export default function Create() {
                   alignSelf: "center",
                   marginLeft: "auto",
                 }}
+                disabled={isSubmitting}
+                onClick={onUpdateRecipe}
               >
                 Update
               </Button>
