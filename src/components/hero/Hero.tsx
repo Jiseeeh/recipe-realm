@@ -38,6 +38,7 @@ export default function Hero({ authType }: HeroProps) {
     const user = {
       id: res.data.id,
       username: res.data.username,
+      isAdmin: !!res.data.result.is_admin,
     };
 
     localStorage.setItem("user", JSON.stringify(user));
