@@ -36,8 +36,8 @@ export default function Hero({ authType }: HeroProps) {
     }
 
     const user = {
-      id: res.data.id,
-      username: res.data.username,
+      id: res.data.result.id,
+      username: res.data.result.name,
       isAdmin: !!res.data.result.is_admin,
     };
 
