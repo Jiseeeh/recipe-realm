@@ -2,6 +2,7 @@ import { ReactNode, useState } from "react";
 import { useRouter } from "next/router";
 import {
   Box,
+  Button,
   Toolbar,
   List,
   Typography,
@@ -16,6 +17,7 @@ import {
   styled,
   Theme,
   useTheme,
+  Modal,
 } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MuiDrawer from "@mui/material/Drawer";
@@ -27,6 +29,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 import Head from "@/components/Head";
+import modalStyle from "@/constants/modalStyle";
 
 const drawerWidth = 240;
 const iconColor = "1d1d1f";
@@ -108,6 +111,11 @@ export default function Sidebar({ children }: SidebarProps) {
   const theme = useTheme();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+  };
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -159,6 +167,7 @@ export default function Sidebar({ children }: SidebarProps) {
           </DrawerHeader>
           <Divider />
           <List>
+            {/* HOME ICON */}
             <ListItem
               disablePadding
               sx={{
@@ -192,6 +201,7 @@ export default function Sidebar({ children }: SidebarProps) {
                 <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            {/* CREATE RECIPE ICON */}
             <ListItem
               disablePadding
               sx={{
@@ -226,12 +236,15 @@ export default function Sidebar({ children }: SidebarProps) {
                 <ListItemText primary="Create" sx={{ opacity: open ? 1 : 0 }} />
               </ListItemButton>
             </ListItem>
+            {/* LOGOUT ICON */}
             <ListItem
               disablePadding
               sx={{
                 display: "block",
               }}
-              onClick={() => {}}
+              onClick={() => {
+                setIsModalOpen(true);
+              }}
             >
               <ListItemButton
                 sx={{
@@ -263,6 +276,34 @@ export default function Sidebar({ children }: SidebarProps) {
           {children}
         </Box>
       </Box>
+      {/* MODAL */}
+      <Modal open={isModalOpen} onClose={handleModalClose}>
+        <Box sx={modalStyle}>
+          <Typography variant="h6" component="h2">
+            Do you want to logout?
+          </Typography>
+          <Box sx={{ display: "flex", marginLeft: "auto" }}>
+            <Button
+              onClick={() => {
+                setIsModalOpen(false);
+              }}
+            >
+              No
+            </Button>
+            <Button
+              variant="contained"
+              sx={{ color: theme.palette.secondary.main }}
+              onClick={() => {
+                localStorage.clear();
+                setIsModalOpen(false);
+                router.push("/");
+              }}
+            >
+              Yes
+            </Button>
+          </Box>
+        </Box>
+      </Modal>
     </>
   );
 }
