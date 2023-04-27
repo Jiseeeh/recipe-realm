@@ -34,7 +34,7 @@ export default function Realm() {
           <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
             {recipes.length > 0 &&
               recipes.map((recipe) => (
-                <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={2}>
+                <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3} xl={2}>
                   <RecipeCard
                     id={recipe.id}
                     author_name={recipe.author_name}
