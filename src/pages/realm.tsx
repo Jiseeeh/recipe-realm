@@ -38,6 +38,7 @@ export default function Realm() {
                   <RecipeCard
                     id={recipe.id}
                     author_name={recipe.author_name}
+                    is_pending={recipe.is_pending}
                     ingredients={recipe.ingredients}
                     image_link={recipe.image_link}
                     name={recipe.name}
