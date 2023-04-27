@@ -19,7 +19,7 @@ import axios from "axios";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
-import IRecipe from "@/types/recipe";
+import Recipe from "@/types/recipe";
 import modalStyle from "@/constants/modalStyle";
 
 export default function Recipe() {
@@ -27,7 +27,7 @@ export default function Recipe() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [privateId, setPrivateId] = useState("");
-  const [recipe, setRecipe] = useState<IRecipe | null>(null);
+  const [recipe, setRecipe] = useState<Recipe | null>(null);
   const theme = useTheme();
   const router = useRouter();
 

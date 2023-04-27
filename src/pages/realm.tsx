@@ -4,13 +4,13 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 
 import Sidebar from "@/components/sidebar/Sidebar";
-import IRecipe from "@/types/recipe";
+import Recipe from "@/types/recipe";
 import RecipeCard from "@/components/recipe/RecipeCard";
 import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
 
 export default function Realm() {
-  const [recipes, setRecipes] = useState<IRecipe[]>([]);
+  const [recipes, setRecipes] = useState<Recipe[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
