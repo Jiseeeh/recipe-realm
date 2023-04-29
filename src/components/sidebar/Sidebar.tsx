@@ -269,7 +269,10 @@ export default function Sidebar({ children }: SidebarProps) {
                 >
                   <LocalDiningIcon sx={{ color: `#${iconColor}` }} />
                 </ListItemIcon>
-                <ListItemText primary="Create" sx={{ opacity: open ? 1 : 0 }} />
+                <ListItemText
+                  primary="My recipes"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
               </ListItemButton>
             </ListItem>
             {/* LOGOUT ICON */}
