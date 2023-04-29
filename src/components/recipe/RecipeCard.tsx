@@ -6,6 +6,7 @@ import {
   CardContent,
   CardMedia,
   Typography,
+  Chip,
 } from "@mui/material";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useTheme } from "@mui/system";
@@ -13,12 +14,18 @@ import { useRouter } from "next/router";
 
 import Recipe from "@/interfaces/recipe";
 
+interface RecipeCardProps extends Recipe {
+  showPendingTag: boolean;
+}
+
 export default function RecipeCard({
   id,
   image_link,
   name,
   description,
-}: Recipe) {
+  is_pending,
+  showPendingTag,
+}: RecipeCardProps) {
   const theme = useTheme();
   const router = useRouter();
 
@@ -36,7 +43,13 @@ export default function RecipeCard({
           sx={{ height: 300 }}
         />
       </CardActionArea>
-      <CardContent>
+      <CardContent
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          gap: 0.5,
+        }}
+      >
         <Typography
           gutterBottom
           variant="h5"
@@ -50,6 +63,14 @@ export default function RecipeCard({
         >
           {name}
         </Typography>
+        <Chip
+          label={!!is_pending ? "Pending" : "Approved"}
+          sx={{
+            backgroundColor: !!is_pending ? "#ff726f" : "#16DB65",
+            color: "#1d1d1f",
+            alignSelf: "start",
+          }}
+        />
         <Typography
           variant="body2"
           sx={{
