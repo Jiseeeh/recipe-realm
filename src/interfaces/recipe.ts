@@ -1,4 +1,4 @@
-type Recipe = {
+interface Recipe {
   id: string;
   private_id: string;
   name: string;
@@ -7,6 +7,6 @@ type Recipe = {
   image_link: string;
   description: string;
   ingredients: string;
-};
+}
 
 export default Recipe;
