@@ -63,14 +63,16 @@ export default function RecipeCard({
         >
           {name}
         </Typography>
-        <Chip
-          label={!!is_pending ? "Pending" : "Approved"}
-          sx={{
-            backgroundColor: !!is_pending ? "#ff726f" : "#16DB65",
-            color: "#1d1d1f",
-            alignSelf: "start",
-          }}
-        />
+        {showPendingTag && (
+          <Chip
+            label={!!is_pending ? "Pending" : "Approved"}
+            sx={{
+              backgroundColor: !!is_pending ? "#ff726f" : "#16DB65",
+              color: "#1d1d1f",
+              alignSelf: "start",
+            }}
+          />
+        )}
         <Typography
           variant="body2"
           sx={{
