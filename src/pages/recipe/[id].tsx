@@ -19,7 +19,7 @@ import axios from "axios";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
-import Recipe from "@/types/recipe";
+import Recipe from "@/interfaces/recipe";
 import modalStyle from "@/constants/modalStyle";
 
 export default function Recipe() {

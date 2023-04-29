@@ -11,7 +11,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
 
-import Recipe from "@/types/recipe";
+import Recipe from "@/interfaces/recipe";
 
 export default function RecipeCard({
   id,

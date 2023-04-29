@@ -4,7 +4,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 
 import Sidebar from "@/components/sidebar/Sidebar";
-import Recipe from "@/types/recipe";
+import Recipe from "@/interfaces/recipe";
 import RecipeCard from "@/components/recipe/RecipeCard";
 import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
