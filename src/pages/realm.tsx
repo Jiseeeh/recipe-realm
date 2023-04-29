@@ -37,6 +37,7 @@ export default function Realm() {
                 <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3} xl={2}>
                   <RecipeCard
                     id={recipe.id}
+                    showPendingTag={false}
                     author_name={recipe.author_name}
                     is_pending={recipe.is_pending}
                     ingredients={recipe.ingredients}
