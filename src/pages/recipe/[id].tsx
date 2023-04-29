@@ -87,14 +87,18 @@ export default function Recipe() {
   useEffect(() => {
     (async function () {
       const { id } = router.query;
-      const res = await axios.get(`${process.env.API}/recipe/${id}`);
 
-      if (res.status !== 200) {
-        toast.error("Error fetching, please try again later.");
-        return;
+      if (!id) return;
+
+      try {
+        const res = await axios.get(`${process.env.API}/recipe/${id}`);
+
+        setRecipe(res.data);
+        setIsLoading(false);
+      } catch (error) {
+        // @ts-ignore
+        toast.error(error.response.data.message);
       }
-      setRecipe(res.data);
-      setIsLoading(false);
     })();
   }, [router.query]);
 
