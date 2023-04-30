@@ -22,7 +22,7 @@ export default function Realm() {
         return;
       }
 
-      setRecipes(res.data);
+      setRecipes(res.data.filter((recipe: Recipe) => recipe.is_pending === 0));
       setIsLoading(false);
     })();
   }, []);
