@@ -349,7 +349,13 @@ export default function Sidebar({ children }: SidebarProps) {
         </Drawer>
         <Box
           component="main"
-          sx={{ flexGrow: 1, p: 3, display: "flex", flexDirection: "column" }}
+          sx={{
+            flexGrow: 1,
+            p: 3,
+            display: "flex",
+            flexDirection: "column",
+            overflowX: "auto",
+          }}
         >
           <DrawerHeader />
           {children}
