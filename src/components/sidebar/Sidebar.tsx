@@ -28,6 +28,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 import Head from "@/components/Head";
 import modalStyle from "@/constants/modalStyle";
@@ -271,6 +272,45 @@ export default function Sidebar({ children }: SidebarProps) {
                 </ListItemIcon>
                 <ListItemText
                   primary="My recipes"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
+            {/* TODO only show to admin */}
+            {/* Moderation ICON */}
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                backgroundColor: `${
+                  router.pathname === "/recipe/moderation"
+                    ? theme.palette.secondary.main
+                    : ""
+                }`,
+              }}
+              onClick={() => {
+                if (router.pathname !== "/recipe/moderation")
+                  router.push("/recipe/moderation");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Moderation"
                   sx={{ opacity: open ? 1 : 0 }}
                 />
               </ListItemButton>
