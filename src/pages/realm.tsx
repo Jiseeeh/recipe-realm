@@ -1,4 +1,4 @@
-import { Grid } from "@mui/material";
+import { Grid, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -15,15 +15,16 @@ export default function Realm() {
 
   useEffect(() => {
     (async function () {
-      const res = await axios.get(`${process.env.API}/recipe`);
+      try {
+        const res = await axios.get(`${process.env.API}/recipe`);
 
-      if (res.status !== 200) {
-        toast.error("Error fetching, please try again later.");
-        return;
+        setRecipes(res.data);
+      } catch (error) {
+        // @ts-ignore
+        toast.error(error.response.data.message);
+      } finally {
+        setIsLoading(false);
       }
-
-      setRecipes(res.data);
-      setIsLoading(false);
     })();
   }, []);
 
@@ -31,9 +32,9 @@ export default function Realm() {
     return (
       <>
         <Sidebar>
-          <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
-            {recipes.length > 0 &&
-              recipes.map((recipe) => (
+          {recipes.length > 0 ? (
+            <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
+              {recipes.map((recipe) => (
                 <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3} xl={2}>
                   <RecipeCard
                     id={recipe.id}
@@ -48,7 +49,17 @@ export default function Realm() {
                   />
                 </Grid>
               ))}
-          </Grid>
+            </Grid>
+          ) : (
+            <Box
+              sx={{
+                display: "grid",
+                placeItems: "center",
+              }}
+            >
+              <Typography variant="h5">No Recipes yet!</Typography>
+            </Box>
+          )}
         </Sidebar>
       </>
     );
