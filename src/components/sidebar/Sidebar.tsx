@@ -1,4 +1,4 @@
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import {
   Box,
@@ -109,11 +109,22 @@ interface SidebarProps {
   children: ReactNode;
 }
 
+type User = {
+  id: number;
+  username: string;
+  isAdmin: boolean;
+};
+
 export default function Sidebar({ children }: SidebarProps) {
   const theme = useTheme();
   const router = useRouter();
   const [open, setOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [user, setUser] = useState<User>({
+    id: 0,
+    isAdmin: false,
+    username: "",
+  });
 
   const handleModalClose = () => {
     setIsModalOpen(false);
@@ -127,6 +138,15 @@ export default function Sidebar({ children }: SidebarProps) {
     setOpen(false);
   };
 
+  useEffect(() => {
+    if (localStorage.getItem("user") !== null) {
+      let user: User = JSON.parse(String(localStorage.getItem("user")));
+
+      setUser(user);
+    } else {
+      router.push("/");
+    }
+  }, []);
   return (
     <>
       <Head />
@@ -276,45 +296,48 @@ export default function Sidebar({ children }: SidebarProps) {
                 />
               </ListItemButton>
             </ListItem>
-            {/* TODO only show to admin */}
             {/* Moderation ICON */}
-            <ListItem
-              disablePadding
-              sx={{
-                display: "block",
-                backgroundColor: `${
-                  router.pathname === "/recipe/moderation"
-                    ? theme.palette.secondary.main
-                    : ""
-                }`,
-              }}
-              onClick={() => {
-                if (router.pathname !== "/recipe/moderation")
-                  router.push("/recipe/moderation");
-              }}
-            >
-              <ListItemButton
+            {user.isAdmin ? (
+              <ListItem
+                disablePadding
                 sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
+                  display: "block",
+                  backgroundColor: `${
+                    router.pathname === "/recipe/moderation"
+                      ? theme.palette.secondary.main
+                      : ""
+                  }`,
+                }}
+                onClick={() => {
+                  if (router.pathname !== "/recipe/moderation")
+                    router.push("/recipe/moderation");
                 }}
               >
-                <ListItemIcon
+                <ListItemButton
                   sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
+                    minHeight: 48,
+                    justifyContent: open ? "initial" : "center",
+                    px: 2.5,
                   }}
                 >
-                  <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Moderation"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
+                  <ListItemIcon
+                    sx={{
+                      minWidth: 0,
+                      mr: open ? 3 : "auto",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Moderation"
+                    sx={{ opacity: open ? 1 : 0 }}
+                  />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              ""
+            )}
             {/* LOGOUT ICON */}
             <ListItem
               disablePadding
