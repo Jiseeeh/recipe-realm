@@ -24,43 +24,47 @@ export default function Hero({ authType }: HeroProps) {
   const onLogin = async () => {
     const toastId = toast.loading("Checking");
 
-    const res = await axios.get(
-      `${process.env.API}/user?username=${username}&password=${password}`
-    );
+    try {
+      const res = await axios.get(
+        `${process.env.API}/user?username=${username}&password=${password}`
+      );
 
-    toast.dismiss(toastId);
+      const user = {
+        id: res.data.result.id,
+        username: res.data.result.name,
+        isAdmin: !!res.data.result.is_admin,
+      };
 
-    if (!res.data.success) {
-      toast.error("Something went wrong!");
-      return;
+      toast.success(res.data.message);
+
+      localStorage.setItem("user", JSON.stringify(user));
+
+      router.push("/realm");
+    } catch (error) {
+      // @ts-ignore
+      toast.error(error.response.data.message);
+    } finally {
+      toast.dismiss(toastId);
+      setIsSubmitting(false);
     }
-
-    const user = {
-      id: res.data.result.id,
-      username: res.data.result.name,
-      isAdmin: !!res.data.result.is_admin,
-    };
-
-    localStorage.setItem("user", JSON.stringify(user));
-    toast.success("Welcome");
-    router.push("/realm");
   };
   const onSignUp = async () => {
     const toastId = toast.loading("Signing you up");
 
-    const res = await axios.post(
-      `${process.env.API}/user?username=${username}&password=${password}`
-    );
+    try {
+      const res = await axios.post(
+        `${process.env.API}/user?username=${username}&password=${password}`
+      );
 
-    toast.dismiss(toastId);
-
-    if (!res.data.success) {
-      toast.error(res.data.message);
-      return;
+      toast.success(res.data.message);
+      router.push("/");
+    } catch (error) {
+      // @ts-ignore
+      toast.error(error.response.data.message);
+    } finally {
+      toast.dismiss(toastId);
+      setIsSubmitting(false);
     }
-
-    toast.success(res.data.message);
-    router.push("/");
   };
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
