@@ -203,8 +203,8 @@ export default function Create() {
         >
           <Box sx={modalStyle}>
             <Typography variant="h6" component="h2">
-              Keep this because you need this in order to{" "}
-              <strong>update/delete</strong> your recipe!
+              Keep this while your recipe is pending because you need this in
+              order to <strong>update/delete</strong> your recipe!
             </Typography>
             <Tooltip title="Never share this to anyone!" placement="top">
               <Typography variant="body1" component="span" fontWeight="bold">
