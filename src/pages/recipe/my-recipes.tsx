@@ -81,7 +81,7 @@ export default function MyRecipes() {
   if (errorMessage) {
     return (
       <Sidebar>
-        <Box sx={{ display: "grid", placeItems: "center", minHeight: "100%" }}>
+        <Box sx={{ display: "grid", placeItems: "center", height: "100%" }}>
           <Typography variant="h5" textAlign="center" fontWeight="bold">
             {errorMessage}
           </Typography>
