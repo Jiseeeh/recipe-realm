@@ -331,6 +331,12 @@ export default function Moderation() {
       } catch (error) {
         // @ts-ignore
         toast.error(error.response.data.message);
+
+        // @ts-ignore
+        if (error.response.data.clearCache) {
+          localStorage.clear();
+          router.push("/");
+        }
       }
     })();
   }, []);

@@ -78,28 +78,34 @@ export default function Create() {
 
     user = JSON.parse(String(localStorage.getItem("user")));
 
-    const res = await axios.post(
-      `${process.env.API}/recipe?recipeName=${recipeName}&authorId=${
-        user.id
-      }&authorName=${
-        user.username
-      }&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll(
-        "\n",
-        "%0A"
-      )}&recipeDescription=${recipeDescription}`
-    );
-    console.log({ recipeIngredients });
-    toast.dismiss(toastId);
-    setIsSubmitting(false);
+    try {
+      const res = await axios.post(
+        `${process.env.API}/recipe?recipeName=${recipeName}&authorId=${
+          user.id
+        }&authorName=${
+          user.username
+        }&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll(
+          "\n",
+          "%0A"
+        )}&recipeDescription=${recipeDescription}`
+      );
 
-    if (!res.data.success) {
-      toast.error("Something went wrong!");
-      return;
+      setPrivateId(res.data.uuid);
+      setIsModalOpen(true);
+      toast.success("Recipe Created!");
+    } catch (error) {
+      // @ts-ignore
+      toast.error(error.response.data.message);
+
+      // @ts-ignore
+      if (error.response.data.clearCache) {
+        localStorage.clear();
+        router.push("/");
+      }
+    } finally {
+      toast.dismiss(toastId);
+      setIsSubmitting(false);
     }
-
-    setPrivateId(res.data.uuid);
-    setIsModalOpen(true);
-    toast.success("Recipe Created!");
   };
 
   // set default values for update mode
