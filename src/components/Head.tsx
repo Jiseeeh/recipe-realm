@@ -18,7 +18,7 @@ export default function Head() {
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="English" />
       <meta name="author" content="Jiseeeh" />
-      <link rel="icon" href="/favicon.ico" />
+      <link rel="icon" href="/food.ico" />
     </NextHead>
   );
 }
