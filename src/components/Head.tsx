@@ -15,7 +15,7 @@ export default function Head() {
         content="Recipes, Recipe Realm, Share recipes, Free Recipes, Post recipes online"
       />
       <meta name="robots" content="index, follow" />
-      <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+      <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="language" content="English" />
       <meta name="author" content="Jiseeeh" />
       <meta property="og:title" content="Recipe Realm" />
