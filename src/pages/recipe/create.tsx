@@ -16,6 +16,7 @@ import axios from "axios";
 import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
 import modalStyle from "@/constants/modalStyle";
+import preserveNewLine from "@/helper/preserveNewLine";
 
 export default function Create() {
   const theme = useTheme();
@@ -40,10 +41,9 @@ export default function Create() {
     const res = await axios.patch(
       `${
         process.env.API
-      }/recipe/${id}?recipeName=${recipeName}&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll(
-        "\n",
-        "%0A"
-      )}&recipeDescription=${recipeDescription}`
+      }/recipe/${id}?recipeName=${recipeName}&imageLink=${imageLink}&recipeIngredients=${preserveNewLine(
+        recipeIngredients
+      )}&recipeDescription=${preserveNewLine(recipeDescription)}`
     );
     setIsSubmitting(false);
 
@@ -84,10 +84,9 @@ export default function Create() {
           user.id
         }&authorName=${
           user.username
-        }&imageLink=${imageLink}&recipeIngredients=${recipeIngredients.replaceAll(
-          "\n",
-          "%0A"
-        )}&recipeDescription=${recipeDescription}`
+        }&imageLink=${imageLink}&recipeIngredients=${preserveNewLine(
+          recipeIngredients
+        )}&recipeDescription=${preserveNewLine(recipeDescription)}`
       );
 
       setPrivateId(res.data.uuid);

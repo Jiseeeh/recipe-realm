@@ -21,6 +21,7 @@ import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
 import Recipe from "@/interfaces/recipe";
 import modalStyle from "@/constants/modalStyle";
+import preserveNewLine from "@/helper/preserveNewLine";
 
 export default function Recipe() {
   const [isLoading, setIsLoading] = useState(true);
@@ -73,10 +74,11 @@ export default function Recipe() {
     router.push(
       `/recipe/create?recipeName=${recipe.name}&imageLink=${
         recipe.image_link
-      }&recipeIngredients=${recipe.ingredients.replaceAll(
-        "\n",
-        "%0A"
-      )}&recipeDescription=${recipe.description}&id=${router.query.id}`
+      }&recipeIngredients=${preserveNewLine(
+        recipe.ingredients
+      )}&recipeDescription=${preserveNewLine(recipe.description)}&id=${
+        router.query.id
+      }`
     );
   };
 
