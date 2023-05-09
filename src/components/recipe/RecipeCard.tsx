@@ -8,14 +8,15 @@ import {
   Typography,
   Chip,
 } from "@mui/material";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
+import { toast } from "react-hot-toast";
 
 import Recipe from "@/interfaces/recipe";
 
 interface RecipeCardProps extends Recipe {
   showPendingTag: boolean;
+  showCopyPID: boolean;
 }
 
 export default function RecipeCard({
@@ -24,13 +25,24 @@ export default function RecipeCard({
   name,
   description,
   is_pending,
+  private_id,
   showPendingTag,
+  showCopyPID,
 }: RecipeCardProps) {
   const theme = useTheme();
   const router = useRouter();
 
-  const onClick = () => {
+  const onLearnMoreClick = () => {
     router.push(`/recipe/${id}`);
+  };
+
+  const onCopyPrivateId = async () => {
+    try {
+      await navigator.clipboard.writeText(private_id);
+      toast.success("Copied!");
+    } catch (error) {
+      toast.error("Something went wrong.");
+    }
   };
 
   return (
@@ -86,14 +98,24 @@ export default function RecipeCard({
         </Typography>
       </CardContent>
       <CardActions>
+        {showCopyPID && (
+          <Button
+            size="small"
+            color="primary"
+            sx={{ color: theme.palette.primary.main, marginLeft: "auto" }}
+            onClick={onCopyPrivateId}
+          >
+            Copy Private ID
+          </Button>
+        )}
         <Button
           size="small"
           variant="contained"
           color="primary"
           sx={{ color: theme.palette.secondary.main, marginLeft: "auto" }}
-          onClick={onClick}
+          onClick={onLearnMoreClick}
         >
-          Learn More <ChevronRightIcon />
+          Learn More
         </Button>
       </CardActions>
     </Card>
