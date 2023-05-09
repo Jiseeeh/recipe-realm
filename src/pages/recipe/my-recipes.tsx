@@ -137,6 +137,7 @@ export default function MyRecipes() {
                     <RecipeCard
                       id={recipe.id}
                       showPendingTag={true}
+                      showCopyPID={true}
                       author_name={recipe.author_name}
                       is_pending={recipe.is_pending}
                       ingredients={recipe.ingredients}
