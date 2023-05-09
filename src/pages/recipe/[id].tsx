@@ -171,7 +171,9 @@ export default function Recipe() {
                 );
             })}
           </Grid>
-          <Typography paragraph>{recipe.description}</Typography>
+          <Typography sx={{ whiteSpace: "pre-wrap" }} paragraph>
+            {recipe.description}
+          </Typography>
           <Box sx={{ marginLeft: "auto" }}>
             <Button
               onClick={onModify}
