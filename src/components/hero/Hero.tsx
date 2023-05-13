@@ -19,6 +19,7 @@ export default function Hero({ authType }: HeroProps) {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onLogin = async () => {
@@ -48,7 +49,14 @@ export default function Hero({ authType }: HeroProps) {
       setIsSubmitting(false);
     }
   };
+
   const onSignUp = async () => {
+    if (password !== repeatPassword) {
+      toast.error("Password doesn't match");
+      setIsSubmitting(false);
+      return;
+    }
+
     const toastId = toast.loading("Signing you up");
 
     try {
@@ -66,6 +74,7 @@ export default function Hero({ authType }: HeroProps) {
       setIsSubmitting(false);
     }
   };
+
   const onSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -167,6 +176,27 @@ export default function Hero({ authType }: HeroProps) {
                 setPassword(e.target.value);
               }}
             />
+            {authType === "Sign up" && (
+              <TextField
+                label="Repeat Password"
+                InputLabelProps={{ sx: { color: `#${inputColor}` } }}
+                sx={{
+                  // Changes TextField label color
+                  "& .MuiFormLabel-root": {
+                    color: `#${inputColor}`,
+                  },
+                  "& .MuiFormLabel-root.Mui-focused": {
+                    color: `#${inputColor}`,
+                  },
+                  input: { color: `#${inputColor}` },
+                }}
+                value={repeatPassword}
+                type="password"
+                onChange={(e) => {
+                  setRepeatPassword(e.target.value);
+                }}
+              />
+            )}
             {authType === "Login" ? (
               <Button
                 variant="contained"
