@@ -74,8 +74,9 @@ export default function Hero({ authType }: HeroProps) {
 
     setIsSubmitting(true);
 
-    if (!username && !password) {
+    if (!username || !password) {
       toast.error("Please do not leave empty fields");
+      setIsSubmitting(false);
       return;
     }
 
