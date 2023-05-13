@@ -1,10 +1,19 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  TextField,
+  Typography,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
 import { useTheme } from "@mui/system";
 import { FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import axios from "axios";
 import toast from "react-hot-toast";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 import Head from "@/components/Head";
 
@@ -21,6 +30,18 @@ export default function Hero({ authType }: HeroProps) {
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showRepeatPassword, setShowRepeatPassword] = useState(false);
+
+  const handleShowPassword = () => setShowPassword((isShown) => !isShown);
+  const handleShowRepeatPassword = () =>
+    setShowRepeatPassword((isShown) => !isShown);
+
+  const handleMouseDownPassword = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+  };
 
   const onLogin = async () => {
     const toastId = toast.loading("Checking");
@@ -171,7 +192,24 @@ export default function Hero({ authType }: HeroProps) {
                 input: { color: `#${inputColor}` },
               }}
               value={password}
-              type="password"
+              type={showPassword ? "text" : "password"}
+              InputProps={{
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {showPassword ? (
+                        <Visibility color="primary" />
+                      ) : (
+                        <VisibilityOff color="primary" />
+                      )}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
               onChange={(e) => {
                 setPassword(e.target.value);
               }}
@@ -191,7 +229,24 @@ export default function Hero({ authType }: HeroProps) {
                   input: { color: `#${inputColor}` },
                 }}
                 value={repeatPassword}
-                type="password"
+                type={showRepeatPassword ? "text" : "password"}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleShowRepeatPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showRepeatPassword ? (
+                          <Visibility color="primary" />
+                        ) : (
+                          <VisibilityOff color="primary" />
+                        )}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
                 onChange={(e) => {
                   setRepeatPassword(e.target.value);
                 }}
