@@ -21,7 +21,7 @@ import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
 import Recipe from "@/interfaces/recipe";
 import modalStyle from "@/constants/modalStyle";
-import preserveNewLine from "@/helper/preserveNewLine";
+import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
 
 export default function Recipe() {
   const [isLoading, setIsLoading] = useState(true);
@@ -74,9 +74,9 @@ export default function Recipe() {
     router.push(
       `/recipe/create?recipeName=${recipe.name}&imageLink=${
         recipe.image_link
-      }&recipeIngredients=${preserveNewLine(
+      }&recipeIngredients=${encodeNewLineAndQuote(
         recipe.ingredients
-      )}&recipeDescription=${preserveNewLine(recipe.description)}&id=${
+      )}&recipeDescription=${encodeNewLineAndQuote(recipe.description)}&id=${
         router.query.id
       }`
     );
