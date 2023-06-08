@@ -32,6 +32,7 @@ export default function MyRecipes() {
   const open = Boolean(anchorEl);
   const router = useRouter();
   const [recipes, setRecipes] = useState<Recipe[]>([]);
+  const [mappedRecipes, setMappedRecipes] = useState<JSX.Element[]>([]);
 
   const handleFilterClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
@@ -50,6 +51,7 @@ export default function MyRecipes() {
     setFilterState(filterBy);
   };
 
+  // fetching of recipes
   useEffect(() => {
     (async function () {
       let user: { id: number; username: string } = { id: 0, username: "" };
@@ -77,6 +79,35 @@ export default function MyRecipes() {
       }
     })();
   }, []);
+
+  // mapping of recipes
+  useEffect(() => {
+    if (recipes.length > 0)
+      setMappedRecipes(
+        recipes
+          .filter((recipe) => {
+            if (filterState === FilterState.ALL) return true;
+
+            return Number(recipe.is_pending) === filterState;
+          })
+          .map((recipe) => (
+            <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3}>
+              <RecipeCard
+                id={recipe.id}
+                showPendingTag={true}
+                showCopyPID={true}
+                author_name={recipe.author_name}
+                is_pending={recipe.is_pending}
+                ingredients={recipe.ingredients}
+                image_link={recipe.image_link}
+                name={recipe.name}
+                description={recipe.description}
+                private_id={recipe.private_id}
+              />
+            </Grid>
+          ))
+      );
+  }, [recipes, filterState]);
 
   if (errorMessage) {
     return (
@@ -116,38 +147,13 @@ export default function MyRecipes() {
               </MenuItem>
             </Menu>
           </Box>
-          <Grid container spacing={{ xs: 2, md: 3 }} justifyContent="center">
-            {recipes.length > 0 &&
-              recipes
-                .filter((recipe) => {
-                  if (filterState === FilterState.ALL) return true;
-
-                  return recipe.is_pending === filterState;
-                })
-                .map((recipe) => (
-                  <Grid
-                    item
-                    key={recipe.id}
-                    xs={12}
-                    sm={6}
-                    md={4}
-                    lg={3}
-                    xl={2}
-                  >
-                    <RecipeCard
-                      id={recipe.id}
-                      showPendingTag={true}
-                      showCopyPID={true}
-                      author_name={recipe.author_name}
-                      is_pending={recipe.is_pending}
-                      ingredients={recipe.ingredients}
-                      image_link={recipe.image_link}
-                      name={recipe.name}
-                      description={recipe.description}
-                      private_id={recipe.private_id}
-                    />
-                  </Grid>
-                ))}
+          <Grid
+            container
+            spacing={{ xs: 2, md: 3 }}
+            justifyContent="center"
+            // minHeight="100vh"
+          >
+            {mappedRecipes.length > 0 ? mappedRecipes : <h1>No recipes!</h1>}
           </Grid>
         </Sidebar>
       </>
