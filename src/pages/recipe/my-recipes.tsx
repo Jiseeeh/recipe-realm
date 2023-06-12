@@ -91,7 +91,7 @@ export default function MyRecipes() {
             return Number(recipe.is_pending) === filterState;
           })
           .map((recipe) => (
-            <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3}>
+            <Grid item key={recipe.id} xs={12} sm={6} md={4} lg={3} xl={2}>
               <RecipeCard
                 id={recipe.id}
                 showPendingTag={true}
