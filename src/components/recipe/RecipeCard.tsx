@@ -79,7 +79,7 @@ export default function RecipeCard({
           <Chip
             label={!!is_pending ? "Pending" : "Approved"}
             sx={{
-              backgroundColor: !!is_pending ? "#ff726f" : "#16DB65",
+              backgroundColor: !!is_pending ? "#e09865" : "#dde1b7",
               color: "#1d1d1f",
               alignSelf: "start",
             }}
@@ -112,7 +112,7 @@ export default function RecipeCard({
           size="small"
           variant="contained"
           color="primary"
-          sx={{ color: theme.palette.secondary.main, marginLeft: "auto" }}
+          sx={{ color: "#fff", marginLeft: "auto" }}
           onClick={onLearnMoreClick}
         >
           Learn More
