@@ -34,7 +34,9 @@ import Head from "@/components/Head";
 import modalStyle from "@/constants/modalStyle";
 
 const drawerWidth = 240;
-const iconColor = "1d1d1f";
+const iconColor = "154734";
+const bgColor = "#F5F5DC";
+const highlightColor = "#a9b44b";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -164,21 +166,21 @@ export default function Sidebar({ children }: SidebarProps) {
                 ...(open && { display: "none" }),
               }}
             >
-              <MenuIcon sx={{ color: `#${iconColor}` }} />
+              <MenuIcon sx={{ color: `#fff` }} />
             </IconButton>
             <Typography
               variant="h5"
               noWrap
               component="div"
               fontWeight="bold"
-              sx={{ color: `#${iconColor}` }}
+              sx={{ color: `#fff` }}
             >
               Recipe Realm
             </Typography>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
-          <DrawerHeader>
+          <DrawerHeader sx={{ backgroundColor: bgColor }}>
             <IconButton onClick={handleDrawerClose}>
               {theme.direction === "rtl" ? (
                 <ChevronRightIcon />
@@ -188,16 +190,14 @@ export default function Sidebar({ children }: SidebarProps) {
             </IconButton>
           </DrawerHeader>
           <Divider />
-          <List>
+          <List sx={{ height: "100%", backgroundColor: bgColor }}>
             {/* HOME ICON */}
             <ListItem
               disablePadding
               sx={{
                 display: "block",
                 backgroundColor: `${
-                  router.pathname === "/realm"
-                    ? theme.palette.secondary.main
-                    : ""
+                  router.pathname === "/realm" ? highlightColor : ""
                 }`,
               }}
               onClick={() => {
@@ -229,9 +229,7 @@ export default function Sidebar({ children }: SidebarProps) {
               sx={{
                 display: "block",
                 backgroundColor: `${
-                  router.pathname === "/recipe/create"
-                    ? theme.palette.secondary.main
-                    : ""
+                  router.pathname === "/recipe/create" ? highlightColor : ""
                 }`,
               }}
               onClick={() => {
@@ -264,9 +262,7 @@ export default function Sidebar({ children }: SidebarProps) {
               sx={{
                 display: "block",
                 backgroundColor: `${
-                  router.pathname === "/recipe/my-recipes"
-                    ? theme.palette.secondary.main
-                    : ""
+                  router.pathname === "/recipe/my-recipes" ? highlightColor : ""
                 }`,
               }}
               onClick={() => {
@@ -304,7 +300,7 @@ export default function Sidebar({ children }: SidebarProps) {
                   display: "block",
                   backgroundColor: `${
                     router.pathname === "/recipe/moderation"
-                      ? theme.palette.secondary.main
+                      ? highlightColor
                       : ""
                   }`,
                 }}
@@ -378,6 +374,8 @@ export default function Sidebar({ children }: SidebarProps) {
             display: "flex",
             flexDirection: "column",
             overflowX: "auto",
+            minHeight: "100vh",
+            backgroundColor: "#F5F5DC",
           }}
         >
           <DrawerHeader />
@@ -400,7 +398,7 @@ export default function Sidebar({ children }: SidebarProps) {
             </Button>
             <Button
               variant="contained"
-              sx={{ color: theme.palette.secondary.main }}
+              sx={{ color: '#fff' }}
               onClick={() => {
                 localStorage.clear();
                 setIsModalOpen(false);
