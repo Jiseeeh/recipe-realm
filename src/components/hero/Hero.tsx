@@ -124,7 +124,7 @@ export default function Hero({ authType }: HeroProps) {
       <Box
         sx={{
           minHeight: "100vh",
-          background: 'url("/sushi-med.jpg")',
+          background: 'url("/green-bg.jpg")',
           backgroundRepeat: "no-repeat",
           backgroundSize: "cover",
           marginLeft: { xs: "-600px", sm: "-300px", md: "0" },
@@ -134,7 +134,7 @@ export default function Hero({ authType }: HeroProps) {
           sx={{
             minHeight: "100vh",
             marginLeft: { xs: "600px", sm: "300px", md: "0" },
-            backdropFilter: "brightness(40%)",
+            backdropFilter: "brightness(60%)",
             display: "grid",
             placeItems: "center",
             gridTemplateColumns: "repeat(12,1fr)",
@@ -253,11 +253,7 @@ export default function Hero({ authType }: HeroProps) {
               />
             )}
             {authType === "Login" ? (
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ color: theme.palette.secondary.main }}
-              >
+              <Button variant="contained" type="submit" sx={{ color: "white" }}>
                 Login
               </Button>
             ) : (
