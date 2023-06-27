@@ -180,7 +180,7 @@ export default function Recipe() {
             <Button
               onClick={onModify}
               variant="contained"
-              sx={{ color: `${theme.palette.secondary.main}` }}
+              sx={{ color: `#fff` }}
             >
               Modify
             </Button>
@@ -211,7 +211,7 @@ export default function Recipe() {
                 <Button
                   variant="contained"
                   disabled={isSubmitting}
-                  sx={{ color: `${theme.palette.secondary.main}` }}
+                  sx={{ color: `#fff` }}
                   onClick={onUpdate}
                 >
                   Update

@@ -98,7 +98,7 @@ export default function Moderation() {
           <Button
             disabled={isSubmitting}
             variant="contained"
-            sx={{ color: theme.palette.secondary.main }}
+            sx={{ color: '#fff' }}
             onClick={handleRecipeApprove(params.row.id)}
           >
             Approve
