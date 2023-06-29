@@ -32,11 +32,13 @@ type User = {
 };
 
 export default function Recipe() {
-  const [isLoading, setIsLoading] = useState(true);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isLiking, setIsLiking] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(false);
+  const [status, setStatus] = useState({
+    isSubmitting: false,
+    isLoading: true,
+    isLiking: false,
+    isLiked: false,
+    isModalOpen: false,
+  });
   const [likes, setLikes] = useState(0);
   const [user, setUser] = useState<User>({ id: 0, username: "" });
   const [privateId, setPrivateId] = useState("");
@@ -45,10 +47,10 @@ export default function Recipe() {
   const router = useRouter();
 
   const handleModalOpen = () => {
-    setIsModalOpen(true);
+    setStatus((prevStatus) => ({ ...prevStatus, isModalOpen: true }));
   };
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setStatus((prevStatus) => ({ ...prevStatus, isModalOpen: false }));
   };
 
   const onDelete = async () => {
@@ -58,12 +60,12 @@ export default function Recipe() {
     }
 
     const toastId = toast.loading("Deleting this recipe");
-    setIsSubmitting(true);
+    setStatus((prevStatus) => ({ ...prevStatus, isSubmitting: true }));
 
     const res = await axios.delete(`${process.env.API}/recipe/${privateId}`);
 
     toast.dismiss(toastId);
-    setIsSubmitting(false);
+    setStatus((prevStatus) => ({ ...prevStatus, isSubmitting: false }));
 
     if (!res.data.success) {
       toast.error(res.data.message);
@@ -99,7 +101,7 @@ export default function Recipe() {
   };
 
   const onLike = async () => {
-    setIsLiking(true);
+    setStatus((prevStatus) => ({ ...prevStatus, isLiking: true }));
     const toastId = toast.loading("Liking");
 
     try {
@@ -117,12 +119,12 @@ export default function Recipe() {
       toast.success(res.data.message);
 
       setLikes((prevLikes) => prevLikes + 1);
-      setIsLiked(true);
+      setStatus((prevStatus) => ({ ...prevStatus, isLiked: true }));
     } catch {
       toast.error("Something went wrong!");
     } finally {
       toast.dismiss(toastId);
-      setIsLiking(false);
+      setStatus((prevStatus) => ({ ...prevStatus, isLiking: false }));
     }
   };
 
@@ -137,7 +139,7 @@ export default function Recipe() {
         const res = await axios.get(`${process.env.API}/recipe/${id}`);
 
         setRecipe(res.data);
-        setIsLoading(false);
+        setStatus((prevStatus) => ({ ...prevStatus, isLoading: false }));
       } catch (error) {
         // @ts-ignore
         toast.error(error.response.data.message);
@@ -167,7 +169,10 @@ export default function Recipe() {
         );
 
         setLikes(res.data.likes_count);
-        setIsLiked(res.data.isLiked);
+        setStatus((prevStatus) => ({
+          ...prevStatus,
+          isLiked: res.data.isLiked,
+        }));
         setUser(user);
       } catch (error) {
         // @ts-ignore
@@ -176,7 +181,7 @@ export default function Recipe() {
     })();
   }, [router.query]);
 
-  if (!isLoading && recipe) {
+  if (!status.isLoading && recipe) {
     return (
       <Sidebar>
         <Container sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
@@ -249,8 +254,8 @@ export default function Recipe() {
             {recipe.description}
           </Typography>
           <Box sx={{ marginLeft: "auto" }}>
-            <IconButton onClick={onLike} disabled={isLiking}>
-              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+            <IconButton onClick={onLike} disabled={status.isLiking}>
+              {status.isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
               <Typography fontWeight="bold">{likes}</Typography>
             </IconButton>
             <Button
@@ -262,8 +267,8 @@ export default function Recipe() {
             </Button>
           </Box>
         </Container>
-        <Modal open={isModalOpen} onClose={handleModalClose}>
-          <Fade in={isModalOpen}>
+        <Modal open={status.isModalOpen} onClose={handleModalClose}>
+          <Fade in={status.isModalOpen}>
             <Box sx={modalStyle}>
               <Typography mb={2} variant="h6" component="h2">
                 Enter recipe&apos;s private ID
@@ -278,7 +283,7 @@ export default function Recipe() {
               />
               <Box sx={{ display: "flex", gap: 1.5, marginLeft: "auto" }}>
                 <Button
-                  disabled={isSubmitting}
+                  disabled={status.isSubmitting}
                   sx={{ color: `${theme.palette.secondary.main}` }}
                   onClick={onDelete}
                 >
@@ -286,7 +291,7 @@ export default function Recipe() {
                 </Button>
                 <Button
                   variant="contained"
-                  disabled={isSubmitting}
+                  disabled={status.isSubmitting}
                   sx={{ color: `#fff` }}
                   onClick={onUpdate}
                 >
