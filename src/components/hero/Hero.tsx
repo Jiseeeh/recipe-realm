@@ -253,15 +253,11 @@ export default function Hero({ authType }: HeroProps) {
               />
             )}
             {authType === "Login" ? (
-              <Button variant="contained" type="submit" sx={{ color: "white" }}>
+              <Button variant="contained" type="submit" sx={{ color: "#fff" }}>
                 Login
               </Button>
             ) : (
-              <Button
-                variant="contained"
-                type="submit"
-                sx={{ color: theme.palette.secondary.main }}
-              >
+              <Button variant="contained" type="submit" sx={{ color: "#fff" }}>
                 Sign up
               </Button>
             )}
