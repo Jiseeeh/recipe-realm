@@ -121,7 +121,7 @@ export default function Recipe() {
       setLikes((prevLikes) => prevLikes + 1);
       setStatus((prevStatus) => ({ ...prevStatus, isLiked: true }));
     } catch {
-      toast.error("Something went wrong!");
+      toast.error("Liking is not yet up!");
     } finally {
       toast.dismiss(toastId);
       setStatus((prevStatus) => ({ ...prevStatus, isLiking: false }));
