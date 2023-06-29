@@ -10,10 +10,13 @@ import {
   Tooltip,
   Container,
   Grid,
+  IconButton,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios from "axios";
 
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -23,10 +26,19 @@ import Recipe from "@/interfaces/recipe";
 import modalStyle from "@/constants/modalStyle";
 import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
 
+type User = {
+  id: number;
+  username: string;
+};
+
 export default function Recipe() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isLiking, setIsLiking] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLiked, setIsLiked] = useState(false);
+  const [likes, setLikes] = useState(0);
+  const [user, setUser] = useState<User>({ id: 0, username: "" });
   const [privateId, setPrivateId] = useState("");
   const [recipe, setRecipe] = useState<Recipe | null>(null);
   const theme = useTheme();
@@ -86,6 +98,35 @@ export default function Recipe() {
     handleModalOpen();
   };
 
+  const onLike = async () => {
+    setIsLiking(true);
+    const toastId = toast.loading("Liking");
+
+    try {
+      const { id } = router.query;
+
+      const res = await axios.post(
+        `${process.env.API}/recipe-likes?recipeId=${id}&userId=${user.id}`
+      );
+
+      if (!res.data.success) {
+        toast.error(res.data.message);
+        return;
+      }
+
+      toast.success(res.data.message);
+
+      setLikes((prevLikes) => prevLikes + 1);
+      setIsLiked(true);
+    } catch {
+      toast.error("Something went wrong!");
+    } finally {
+      toast.dismiss(toastId);
+      setIsLiking(false);
+    }
+  };
+
+  // fetch recipe
   useEffect(() => {
     (async function () {
       const { id } = router.query;
@@ -97,6 +138,37 @@ export default function Recipe() {
 
         setRecipe(res.data);
         setIsLoading(false);
+      } catch (error) {
+        // @ts-ignore
+        toast.error(error.response.data.message);
+      }
+    })();
+  }, [router.query]);
+
+  // fetch recipe likes
+  useEffect(() => {
+    (async function () {
+      const { id } = router.query;
+
+      if (!id) return;
+
+      let user: User = { id: 0, username: "" };
+
+      if (localStorage.getItem("user") === null) {
+        router.push("/");
+        return;
+      }
+
+      user = JSON.parse(String(localStorage.getItem("user")));
+
+      try {
+        const res = await axios.get(
+          `${process.env.API}/recipe-likes?recipeId=${id}&userId=${user.id}`
+        );
+
+        setLikes(res.data.likes_count);
+        setIsLiked(res.data.isLiked);
+        setUser(user);
       } catch (error) {
         // @ts-ignore
         toast.error(error.response.data.message);
@@ -177,6 +249,10 @@ export default function Recipe() {
             {recipe.description}
           </Typography>
           <Box sx={{ marginLeft: "auto" }}>
+            <IconButton onClick={onLike} disabled={isLiking}>
+              {isLiked ? <FavoriteIcon /> : <FavoriteBorderIcon />}
+              <Typography fontWeight="bold">{likes}</Typography>
+            </IconButton>
             <Button
               onClick={onModify}
               variant="contained"
