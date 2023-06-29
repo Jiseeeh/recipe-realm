@@ -103,6 +103,7 @@ export default function MyRecipes() {
                 name={recipe.name}
                 description={recipe.description}
                 private_id={recipe.private_id}
+                likes_count={recipe.likes_count}
               />
             </Grid>
           ))

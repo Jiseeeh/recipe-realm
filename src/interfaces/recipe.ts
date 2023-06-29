@@ -7,6 +7,7 @@ interface Recipe {
   image_link: string;
   description: string;
   ingredients: string;
+  likes_count: number;
 }
 
 export default Recipe;
