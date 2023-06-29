@@ -176,7 +176,7 @@ export default function Recipe() {
         setUser(user);
       } catch (error) {
         // @ts-ignore
-        toast.error(error.response.data.message);
+        // toast.error(error.response.data.message); temp disableg
       }
     })();
   }, [router.query]);
