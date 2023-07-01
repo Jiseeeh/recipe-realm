@@ -52,7 +52,7 @@ export default function RecipeCard({
           component="img"
           image={image_link}
           alt="Recipe Image"
-          sx={{ height: 300 }}
+          sx={{ height: 200 }}
         />
       </CardActionArea>
       <CardContent
