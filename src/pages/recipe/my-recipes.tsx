@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 import { toast } from "react-hot-toast";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import Head from "@/components/Head";
 import Recipe from "@/interfaces/recipe";
@@ -70,10 +70,16 @@ export default function MyRecipes() {
 
         setRecipes(res.data);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
 
-        setErrorMessage("You haven't created any recipes yet!");
+          setErrorMessage("You haven't created any recipes yet!");
+
+          if (error.response?.data.clearCache) {
+            localStorage.clear();
+            router.push("/");
+          }
+        }
       } finally {
         setIsLoading(false);
       }
