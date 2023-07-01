@@ -143,6 +143,8 @@ export default function Recipe() {
       } catch (error) {
         // @ts-ignore
         toast.error(error.response.data.message);
+
+        router.push("/realm");
       }
     })();
   }, [router.query]);
