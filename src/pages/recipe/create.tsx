@@ -11,7 +11,7 @@ import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -93,13 +93,13 @@ export default function Create() {
       setIsModalOpen(true);
       toast.success("Recipe Created!");
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
 
-      // @ts-ignore
-      if (error.response.data.clearCache) {
-        localStorage.clear();
-        router.push("/");
+        if (error.response?.data.clearCache) {
+          localStorage.clear();
+          router.push("/");
+        }
       }
     } finally {
       toast.dismiss(toastId);

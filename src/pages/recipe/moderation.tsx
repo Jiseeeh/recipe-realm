@@ -8,7 +8,7 @@ import {
   GridPaginationModel,
 } from "@mui/x-data-grid";
 import { useRouter } from "next/router";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -133,8 +133,8 @@ export default function Moderation() {
 
         setRecipes(updatedRecipes);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError)
+          toast.error(error.response?.data.message);
       } finally {
         endLoader(toastId);
       }
@@ -160,8 +160,8 @@ export default function Moderation() {
 
         setRecipes(updatedRecipes);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError)
+          toast.error(error.response?.data.message);
       } finally {
         endLoader(toastId);
       }
@@ -189,8 +189,8 @@ export default function Moderation() {
 
         setRecipes(updatedRecipes);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError)
+          toast.error(error.response?.data.message);
       } finally {
         endLoader(toastId);
       }
@@ -215,8 +215,8 @@ export default function Moderation() {
 
       setRecipes(updatedRecipes);
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data.message);
     } finally {
       endLoader(toastId);
     }
@@ -243,8 +243,8 @@ export default function Moderation() {
       setRecipes(updatedRecipes);
       setSelectionModel([]);
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data.message);
     } finally {
       endLoader(toastId);
     }
@@ -272,8 +272,8 @@ export default function Moderation() {
       setRecipes(updatedRecipes);
       setSelectionModel([]);
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data.message);
     } finally {
       endLoader(toastId);
     }
@@ -329,13 +329,13 @@ export default function Moderation() {
         setRecipes(data);
         setIsLoading(false);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
 
-        // @ts-ignore
-        if (error.response.data.clearCache) {
-          localStorage.clear();
-          router.push("/");
+          if (error.response?.data.clearCache) {
+            localStorage.clear();
+            router.push("/");
+          }
         }
       }
     })();

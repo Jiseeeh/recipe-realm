@@ -10,7 +10,7 @@ import { useTheme } from "@mui/system";
 import { FormEvent, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import toast from "react-hot-toast";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -63,8 +63,8 @@ export default function Hero({ authType }: HeroProps) {
 
       router.push("/realm");
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data.message);
     } finally {
       toast.dismiss(toastId);
       setIsSubmitting(false);
@@ -88,8 +88,8 @@ export default function Hero({ authType }: HeroProps) {
       toast.success(res.data.message);
       router.push("/");
     } catch (error) {
-      // @ts-ignore
-      toast.error(error.response.data.message);
+      if (error instanceof AxiosError)
+        toast.error(error.response?.data.message);
     } finally {
       toast.dismiss(toastId);
       setIsSubmitting(false);

@@ -17,7 +17,7 @@ import { useRouter } from "next/router";
 import { toast } from "react-hot-toast";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
@@ -141,10 +141,11 @@ export default function Recipe() {
         setRecipe(res.data);
         setStatus((prevStatus) => ({ ...prevStatus, isLoading: false }));
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
 
-        router.push("/realm");
+          router.push("/realm");
+        }
       }
     })();
   }, [router.query]);
@@ -177,8 +178,8 @@ export default function Recipe() {
         }));
         setUser(user);
       } catch (error) {
-        // @ts-ignore
-        // toast.error(error.response.data.message); temp disableg
+        if (error instanceof AxiosError)
+          toast.error(error.response?.data.message);
       }
     })();
   }, [router.query]);

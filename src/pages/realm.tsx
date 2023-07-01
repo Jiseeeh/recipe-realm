@@ -2,7 +2,7 @@ import { Grid, Box, Typography } from "@mui/material";
 import { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import ReactSearchBox from "react-search-box";
 
 import Sidebar from "@/components/sidebar/Sidebar";
@@ -16,6 +16,7 @@ export default function Realm() {
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
 
+  // fetch recipes
   useEffect(() => {
     (async function () {
       try {
@@ -23,8 +24,14 @@ export default function Realm() {
 
         setRecipes(res.data);
       } catch (error) {
-        // @ts-ignore
-        toast.error(error.response.data.message);
+        if (error instanceof AxiosError) {
+          toast.error(error.response?.data.message);
+
+          if (error.response?.data.clearCache) {
+            localStorage.clear();
+            router.push("/");
+          }
+        }
       } finally {
         setIsLoading(false);
       }
