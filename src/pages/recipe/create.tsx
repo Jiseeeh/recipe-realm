@@ -171,7 +171,7 @@ export default function Create() {
               <Button
                 variant="contained"
                 sx={{
-                  color: `${theme.palette.secondary.main}`,
+                  color: `#fff`,
                   alignSelf: "center",
                   marginLeft: "auto",
                 }}
