@@ -173,9 +173,17 @@ export default function Sidebar({ children }: SidebarProps) {
               noWrap
               component="div"
               fontWeight="bold"
-              sx={{ color: `#fff` }}
+              sx={{ color: `#fff`, marginRight: "auto" }}
             >
               Recipe Realm
+            </Typography>
+            <Typography
+              variant="subtitle2"
+              noWrap
+              component="span"
+              sx={{ color: `#fff`, display: { xs: "none", sm: "block" } }}
+            >
+              {`Logged in as ${user.username}`}
             </Typography>
           </Toolbar>
         </AppBar>
@@ -398,7 +406,7 @@ export default function Sidebar({ children }: SidebarProps) {
             </Button>
             <Button
               variant="contained"
-              sx={{ color: '#fff' }}
+              sx={{ color: "#fff" }}
               onClick={() => {
                 localStorage.clear();
                 setIsModalOpen(false);
