@@ -102,14 +102,40 @@ export default function Recipe() {
 
   const onLike = async () => {
     setStatus((prevStatus) => ({ ...prevStatus, isLiking: true }));
-    const toastId = toast.loading("Liking");
+
+    const { id } = router.query;
+    let likeToastId;
 
     try {
-      const { id } = router.query;
+      if (status.isLiked) {
+        const toastId = toast.loading("Disliking");
+
+        const res = await axios.patch(
+          `${process.env.API}/recipe-likes?recipeId=${id}&userId=${user.id}`
+        );
+        const message = res.data.message;
+
+        toast.dismiss(toastId);
+
+        if (res.data.success) {
+          toast.success(message);
+
+          setStatus((prevStatus) => ({ ...prevStatus, isLiked: false }));
+          setLikes((prevLikes) => prevLikes - 1);
+        } else {
+          toast.error(message);
+        }
+
+        return;
+      }
+
+      likeToastId = toast.loading("Liking");
 
       const res = await axios.post(
         `${process.env.API}/recipe-likes?recipeId=${id}&userId=${user.id}`
       );
+
+      toast.dismiss(likeToastId);
 
       if (!res.data.success) {
         toast.error(res.data.message);
@@ -120,10 +146,17 @@ export default function Recipe() {
 
       setLikes((prevLikes) => prevLikes + 1);
       setStatus((prevStatus) => ({ ...prevStatus, isLiked: true }));
-    } catch {
-      toast.error("Liking is not yet up!");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data.message);
+        toast.dismiss(likeToastId);
+
+        if (error.response?.data.clearCache) {
+          localStorage.clear();
+          router.push("/");
+        }
+      }
     } finally {
-      toast.dismiss(toastId);
       setStatus((prevStatus) => ({ ...prevStatus, isLiking: false }));
     }
   };
