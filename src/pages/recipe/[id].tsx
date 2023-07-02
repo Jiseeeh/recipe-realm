@@ -25,6 +25,7 @@ import Head from "@/components/Head";
 import Recipe from "@/interfaces/recipe";
 import modalStyle from "@/constants/modalStyle";
 import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
+import { clearCache } from "@/helper/clearCache";
 
 type User = {
   id: number;
@@ -151,10 +152,7 @@ export default function Recipe() {
         toast.error(error.response?.data.message);
         toast.dismiss(likeToastId);
 
-        if (error.response?.data.clearCache) {
-          localStorage.clear();
-          router.push("/");
-        }
+        if (error.response?.data.clearCache) clearCache(router);
       }
     } finally {
       setStatus((prevStatus) => ({ ...prevStatus, isLiking: false }));

@@ -10,6 +10,7 @@ import Recipe from "@/interfaces/recipe";
 import RecipeCard from "@/components/recipe/RecipeCard";
 import Loader from "@/components/loader/Loader";
 import Head from "@/components/Head";
+import { clearCache } from "@/helper/clearCache";
 
 export default function Realm() {
   const [recipes, setRecipes] = useState<Recipe[]>([]);
@@ -27,10 +28,7 @@ export default function Realm() {
         if (error instanceof AxiosError) {
           toast.error(error.response?.data.message);
 
-          if (error.response?.data.clearCache) {
-            localStorage.clear();
-            router.push("/");
-          }
+          if (error.response?.data.clearCache) clearCache(router);
         }
       } finally {
         setIsLoading(false);

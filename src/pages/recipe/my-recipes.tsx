@@ -17,6 +17,7 @@ import Recipe from "@/interfaces/recipe";
 import RecipeCard from "@/components/recipe/RecipeCard";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
+import { clearCache } from "@/helper/clearCache";
 
 enum FilterState {
   ALL = -1,
@@ -75,10 +76,7 @@ export default function MyRecipes() {
 
           setErrorMessage("You haven't created any recipes yet!");
 
-          if (error.response?.data.clearCache) {
-            localStorage.clear();
-            router.push("/");
-          }
+          if (error.response?.data.clearCache) clearCache(router);
         }
       } finally {
         setIsLoading(false);

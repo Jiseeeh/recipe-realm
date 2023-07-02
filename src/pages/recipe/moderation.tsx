@@ -14,6 +14,7 @@ import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
 import Recipe from "@/interfaces/recipe";
+import { clearCache } from "@/helper/clearCache";
 
 export default function Moderation() {
   const [isLoading, setIsLoading] = useState(true);
@@ -332,10 +333,7 @@ export default function Moderation() {
         if (error instanceof AxiosError) {
           toast.error(error.response?.data.message);
 
-          if (error.response?.data.clearCache) {
-            localStorage.clear();
-            router.push("/");
-          }
+          if (error.response?.data.clearCache) clearCache(router);
         }
       }
     })();

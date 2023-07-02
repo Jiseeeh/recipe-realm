@@ -17,6 +17,7 @@ import Head from "@/components/Head";
 import Sidebar from "@/components/sidebar/Sidebar";
 import modalStyle from "@/constants/modalStyle";
 import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
+import { clearCache } from "@/helper/clearCache";
 
 export default function Create() {
   const theme = useTheme();
@@ -96,10 +97,7 @@ export default function Create() {
       if (error instanceof AxiosError) {
         toast.error(error.response?.data.message);
 
-        if (error.response?.data.clearCache) {
-          localStorage.clear();
-          router.push("/");
-        }
+        if (error.response?.data.clearCache) clearCache(router);
       }
     } finally {
       toast.dismiss(toastId);
