@@ -18,6 +18,7 @@ import { toast } from "react-hot-toast";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import axios, { AxiosError } from "axios";
+import NextHead from "next/head";
 
 import Sidebar from "@/components/sidebar/Sidebar";
 import Loader from "@/components/loader/Loader";
@@ -218,6 +219,9 @@ export default function Recipe() {
   if (!status.isLoading && recipe) {
     return (
       <Sidebar>
+        <NextHead>
+          <title>{recipe.name}</title>
+        </NextHead>
         <Container sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
           <Box
             sx={{
