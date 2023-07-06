@@ -27,7 +27,6 @@ export default function Moderation() {
     page: 0,
     pageSize: 25,
   });
-  const theme = useTheme();
   const router = useRouter();
 
   const columns: GridColDef[] = [
@@ -342,7 +341,6 @@ export default function Moderation() {
   if (!isLoading) {
     return (
       <>
-        <Head />
         <Sidebar>
           {selectionModel.length >= 1 ? (
             <Box sx={{ display: "flex", marginLeft: "auto", marginBottom: 1 }}>
