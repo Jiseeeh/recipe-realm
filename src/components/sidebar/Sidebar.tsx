@@ -29,6 +29,7 @@ import BorderColorIcon from "@mui/icons-material/BorderColor";
 import LogoutIcon from "@mui/icons-material/Logout";
 import LocalDiningIcon from "@mui/icons-material/LocalDining";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 import Head from "@/components/Head";
 import modalStyle from "@/constants/modalStyle";
@@ -342,6 +343,42 @@ export default function Sidebar({ children }: SidebarProps) {
             ) : (
               ""
             )}
+            {/* Top Recipes ICON */}
+            <ListItem
+              disablePadding
+              sx={{
+                display: "block",
+                backgroundColor: `${
+                  router.pathname === "/recipe/rank" ? highlightColor : ""
+                }`,
+              }}
+              onClick={() => {
+                if (router.pathname !== "/recipe/rank")
+                  router.push("/recipe/rank");
+              }}
+            >
+              <ListItemButton
+                sx={{
+                  minHeight: 48,
+                  justifyContent: open ? "initial" : "center",
+                  px: 2.5,
+                }}
+              >
+                <ListItemIcon
+                  sx={{
+                    minWidth: 0,
+                    mr: open ? 3 : "auto",
+                    justifyContent: "center",
+                  }}
+                >
+                  <EmojiEventsIcon sx={{ color: `#${iconColor}` }} />
+                </ListItemIcon>
+                <ListItemText
+                  primary="Top Recipes"
+                  sx={{ opacity: open ? 1 : 0 }}
+                />
+              </ListItemButton>
+            </ListItem>
             {/* LOGOUT ICON */}
             <ListItem
               disablePadding
