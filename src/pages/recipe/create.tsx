@@ -7,7 +7,6 @@ import {
   Modal,
   Tooltip,
 } from "@mui/material";
-import { useTheme } from "@mui/system";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
@@ -20,7 +19,6 @@ import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
 import { clearCache } from "@/helper/clearCache";
 
 export default function Create() {
-  const theme = useTheme();
   const router = useRouter();
   const [recipeName, setRecipeName] = useState("");
   const [imageLink, setImageLink] = useState("");
