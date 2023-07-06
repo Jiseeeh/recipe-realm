@@ -33,9 +33,10 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 
 import Head from "@/components/Head";
 import modalStyle from "@/constants/modalStyle";
+import SidebarIcon from "./SidebarIcon";
 
 const drawerWidth = 240;
-const iconColor = "154734";
+const iconColor = "#154734";
 const bgColor = "#F5F5DC";
 const highlightColor = "#a9b44b";
 
@@ -201,184 +202,44 @@ export default function Sidebar({ children }: SidebarProps) {
           <Divider />
           <List sx={{ height: "100%", backgroundColor: bgColor }}>
             {/* HOME ICON */}
-            <ListItem
-              disablePadding
-              sx={{
-                display: "block",
-                backgroundColor: `${
-                  router.pathname === "/realm" ? highlightColor : ""
-                }`,
-              }}
-              onClick={() => {
-                if (router.pathname !== "/realm") router.push("/realm");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <HomeIcon sx={{ color: `#${iconColor}` }} />
-                </ListItemIcon>
-                <ListItemText primary="Home" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+            <SidebarIcon
+              router={router}
+              path="/realm"
+              isSidebarOpen={open}
+              icon={<HomeIcon sx={{ color: `#${iconColor}` }} />}
+            />
             {/* CREATE RECIPE ICON */}
-            <ListItem
-              disablePadding
-              sx={{
-                display: "block",
-                backgroundColor: `${
-                  router.pathname === "/recipe/create" ? highlightColor : ""
-                }`,
-              }}
-              onClick={() => {
-                if (router.pathname !== "/recipe/create")
-                  router.push("/recipe/create");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <BorderColorIcon sx={{ color: `#${iconColor}` }} />
-                </ListItemIcon>
-                <ListItemText primary="Create" sx={{ opacity: open ? 1 : 0 }} />
-              </ListItemButton>
-            </ListItem>
+            <SidebarIcon
+              router={router}
+              path="/recipe/create"
+              isSidebarOpen={open}
+              icon={<BorderColorIcon sx={{ color: `#${iconColor}` }} />}
+            />
             {/* Own Recipes ICON */}
-            <ListItem
-              disablePadding
-              sx={{
-                display: "block",
-                backgroundColor: `${
-                  router.pathname === "/recipe/my-recipes" ? highlightColor : ""
-                }`,
-              }}
-              onClick={() => {
-                if (router.pathname !== "/recipe/my-recipes")
-                  router.push("/recipe/my-recipes");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <LocalDiningIcon sx={{ color: `#${iconColor}` }} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="My recipes"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
+            <SidebarIcon
+              router={router}
+              path="/recipe/my-recipes"
+              isSidebarOpen={open}
+              icon={<LocalDiningIcon sx={{ color: `#${iconColor}` }} />}
+            />
             {/* Moderation ICON */}
-            {user.isAdmin ? (
-              <ListItem
-                disablePadding
-                sx={{
-                  display: "block",
-                  backgroundColor: `${
-                    router.pathname === "/recipe/moderation"
-                      ? highlightColor
-                      : ""
-                  }`,
-                }}
-                onClick={() => {
-                  if (router.pathname !== "/recipe/moderation")
-                    router.push("/recipe/moderation");
-                }}
-              >
-                <ListItemButton
-                  sx={{
-                    minHeight: 48,
-                    justifyContent: open ? "initial" : "center",
-                    px: 2.5,
-                  }}
-                >
-                  <ListItemIcon
-                    sx={{
-                      minWidth: 0,
-                      mr: open ? 3 : "auto",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary="Moderation"
-                    sx={{ opacity: open ? 1 : 0 }}
-                  />
-                </ListItemButton>
-              </ListItem>
-            ) : (
-              ""
+            {user.isAdmin && (
+              <SidebarIcon
+                router={router}
+                path="/recipe/moderation"
+                isSidebarOpen={open}
+                icon={
+                  <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
+                }
+              />
             )}
             {/* Top Recipes ICON */}
-            <ListItem
-              disablePadding
-              sx={{
-                display: "block",
-                backgroundColor: `${
-                  router.pathname === "/recipe/rank" ? highlightColor : ""
-                }`,
-              }}
-              onClick={() => {
-                if (router.pathname !== "/recipe/rank")
-                  router.push("/recipe/rank");
-              }}
-            >
-              <ListItemButton
-                sx={{
-                  minHeight: 48,
-                  justifyContent: open ? "initial" : "center",
-                  px: 2.5,
-                }}
-              >
-                <ListItemIcon
-                  sx={{
-                    minWidth: 0,
-                    mr: open ? 3 : "auto",
-                    justifyContent: "center",
-                  }}
-                >
-                  <EmojiEventsIcon sx={{ color: `#${iconColor}` }} />
-                </ListItemIcon>
-                <ListItemText
-                  primary="Top Recipes"
-                  sx={{ opacity: open ? 1 : 0 }}
-                />
-              </ListItemButton>
-            </ListItem>
+            <SidebarIcon
+              router={router}
+              path="/recipe/rank"
+              isSidebarOpen={open}
+              icon={<EmojiEventsIcon sx={{ color: `#${iconColor}` }} />}
+            />
             {/* LOGOUT ICON */}
             <ListItem
               disablePadding
