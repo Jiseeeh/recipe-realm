@@ -18,6 +18,8 @@ import modalStyle from "@/constants/modalStyle";
 import encodeNewLineAndQuote from "@/helper/preserveNewLineAndQuote";
 import { clearCache } from "@/helper/clearCache";
 
+const MAX_RECIPE_NAME_LENGTH = 18;
+
 export default function Create() {
   const router = useRouter();
   const [recipeName, setRecipeName] = useState("");
@@ -61,6 +63,16 @@ export default function Create() {
   const onCreateRecipe = async () => {
     if (!recipeName || !imageLink || !recipeIngredients || !recipeDescription) {
       toast.error("Do not leave empty fields!");
+      return;
+    }
+
+    if (recipeName.length > MAX_RECIPE_NAME_LENGTH) {
+      toast.error("Recipe name too long!");
+      return;
+    }
+
+    if (!imageLink.match(/\bhttps?:\/\/\S+\.(?:webp|jpe?g|png)\b/)) {
+      toast.error("Image link is not valid.");
       return;
     }
 
