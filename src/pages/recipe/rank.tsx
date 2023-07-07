@@ -1,13 +1,14 @@
 import { useState, useEffect } from "react";
 import { Typography, Box } from "@mui/material";
 import { toast } from "react-hot-toast";
-import { NextRouter, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import axios, { AxiosError } from "axios";
 
 import Sidebar from "@/components/sidebar/Sidebar";
 import Head from "@/components/Head";
 import Loader from "@/components/loader/Loader";
 import Recipe from "@/interfaces/recipe";
+import RecipeRankItem from "@/components/recipe/RecipeRankItem";
 
 const RECIPE_LIMIT = 5;
 
@@ -66,12 +67,7 @@ export default function Rank() {
               >
                 {/* recipes */}
                 {recipes.map((recipe) => (
-                  <RecipeItem
-                    id={recipe?.id}
-                    name={recipe?.name}
-                    image_link={recipe?.image_link}
-                    likes_count={recipe?.likes_count}
-                  />
+                  <RecipeRankItem recipe={recipe} router={router} />
                 ))}
               </Box>
             </Box>
@@ -80,7 +76,7 @@ export default function Rank() {
               sx={{ display: "grid", placeItems: "center", minHeight: "100%" }}
             >
               <Typography variant="h6" textAlign="center">
-                There are no currently liked recipes.
+                {"There are no currently liked recipes."}
               </Typography>
             </Box>
           )}
@@ -94,57 +90,5 @@ export default function Rank() {
       <Head />
       <Loader />
     </>
-  );
-}
-
-function RecipeItem(recipe: Partial<Recipe>) {
-  const router = useRouter();
-
-  return (
-    <Box
-      sx={{
-        display: "flex",
-        "&:hover": {
-          backgroundColor: "#dddd88",
-        },
-        transition: "background-color .15s ease-in-out",
-        borderRadius: "5px",
-        cursor: "pointer",
-        padding: "1rem",
-        alignItems: "center",
-        gap: 1,
-        width: "100%",
-      }}
-      onClick={() => {
-        router.push(`/recipe/${recipe.id}`);
-      }}
-    >
-      <Box
-        sx={{
-          height: 60,
-          width: 60,
-          borderRadius: "50%",
-          objectFit: "cover",
-        }}
-        component="img"
-        src={recipe.image_link}
-      />
-      <Box>
-        <Typography
-          sx={{
-            fontSize: "clamp(.8rem, -1.6563rem + 8.5vw, 1.5rem);",
-          }}
-          variant="h6"
-        >
-          {recipe.name}
-        </Typography>
-        <Typography
-          sx={{
-            fontSize: "clamp(.7rem, -1.6563rem + 8.5vw, 1rem);",
-          }}
-          variant="subtitle2"
-        >{`Current likes: ${recipe.likes_count}`}</Typography>
-      </Box>
-    </Box>
   );
 }
