@@ -207,6 +207,7 @@ export default function Sidebar({ children }: SidebarProps) {
               router={router}
               path="/realm"
               isSidebarOpen={open}
+              itemText="Home"
               icon={<HomeIcon sx={{ color: `#${iconColor}` }} />}
             />
             {/* CREATE RECIPE ICON */}
@@ -214,6 +215,7 @@ export default function Sidebar({ children }: SidebarProps) {
               router={router}
               path="/recipe/create"
               isSidebarOpen={open}
+              itemText="Create Recipe"
               icon={<BorderColorIcon sx={{ color: `#${iconColor}` }} />}
             />
             {/* Own Recipes ICON */}
@@ -221,6 +223,7 @@ export default function Sidebar({ children }: SidebarProps) {
               router={router}
               path="/recipe/my-recipes"
               isSidebarOpen={open}
+              itemText="My Recipes"
               icon={<LocalDiningIcon sx={{ color: `#${iconColor}` }} />}
             />
             {/* Moderation ICON */}
@@ -229,6 +232,7 @@ export default function Sidebar({ children }: SidebarProps) {
                 router={router}
                 path="/recipe/moderation"
                 isSidebarOpen={open}
+                itemText="Moderation"
                 icon={
                   <AdminPanelSettingsIcon sx={{ color: `#${iconColor}` }} />
                 }
@@ -239,6 +243,7 @@ export default function Sidebar({ children }: SidebarProps) {
               router={router}
               path="/recipe/rank"
               isSidebarOpen={open}
+              itemText="Top Recipes"
               icon={<EmojiEventsIcon sx={{ color: `#${iconColor}` }} />}
             />
             {/* LOGOUT ICON */}

@@ -11,6 +11,7 @@ interface SidebarIconProps {
   router: NextRouter;
   isSidebarOpen: boolean;
   icon: React.ReactNode;
+  itemText: string;
 }
 
 const highlightColor = "#a9b44b";
@@ -20,6 +21,7 @@ export default function SidebarIcon({
   router,
   isSidebarOpen,
   icon,
+  itemText,
 }: SidebarIconProps) {
   return (
     <ListItem
@@ -48,7 +50,10 @@ export default function SidebarIcon({
         >
           {icon}
         </ListItemIcon>
-        <ListItemText primary="Home" sx={{ opacity: isSidebarOpen ? 1 : 0 }} />
+        <ListItemText
+          primary={itemText}
+          sx={{ opacity: isSidebarOpen ? 1 : 0 }}
+        />
       </ListItemButton>
     </ListItem>
   );
