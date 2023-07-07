@@ -50,10 +50,10 @@ export default function Rank() {
                   letterSpacing: "5px",
                 }}
               >
-                Top Liked Recipes
+                {"Top Liked Recipes"}
               </Typography>
               <Typography variant="subtitle1" sx={{ textAlign: "center" }}>
-                Select a recipe to view it.
+                {"Select a recipe to view it."}
               </Typography>
               <Box
                 sx={{
@@ -61,7 +61,6 @@ export default function Rank() {
                   justifyContent: "center",
                   alignContent: "space-between",
                   gap: 2,
-                  minHeight: "100%",
                   marginTop: "2rem",
                 }}
               >
@@ -133,13 +132,18 @@ function RecipeItem(recipe: Partial<Recipe>) {
       <Box>
         <Typography
           sx={{
-            fontSize: "clamp(1rem, -1.6563rem + 8.5vw, 1.5rem);",
+            fontSize: "clamp(.8rem, -1.6563rem + 8.5vw, 1.5rem);",
           }}
           variant="h6"
         >
           {recipe.name}
         </Typography>
-        <Typography variant="subtitle2">{`Current likes: ${recipe.likes_count}`}</Typography>
+        <Typography
+          sx={{
+            fontSize: "clamp(.7rem, -1.6563rem + 8.5vw, 1rem);",
+          }}
+          variant="subtitle2"
+        >{`Current likes: ${recipe.likes_count}`}</Typography>
       </Box>
     </Box>
   );
