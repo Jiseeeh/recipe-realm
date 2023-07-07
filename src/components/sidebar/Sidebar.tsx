@@ -150,7 +150,8 @@ export default function Sidebar({ children }: SidebarProps) {
     } else {
       router.push("/");
     }
-  }, []);
+  }, [router]);
+
   return (
     <>
       <Head />

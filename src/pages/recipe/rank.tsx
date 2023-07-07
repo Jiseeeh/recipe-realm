@@ -34,7 +34,7 @@ export default function Rank() {
         }
       }
     })();
-  }, []);
+  }, [router]);
 
   if (!isLoading) {
     return (
@@ -67,7 +67,11 @@ export default function Rank() {
               >
                 {/* recipes */}
                 {recipes.map((recipe) => (
-                  <RecipeRankItem recipe={recipe} router={router} />
+                  <RecipeRankItem
+                    key={recipe?.id}
+                    recipe={recipe}
+                    router={router}
+                  />
                 ))}
               </Box>
             </Box>

@@ -336,7 +336,7 @@ export default function Moderation() {
         }
       }
     })();
-  }, []);
+  }, [router]);
 
   if (!isLoading) {
     return (

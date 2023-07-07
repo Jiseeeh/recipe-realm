@@ -82,7 +82,7 @@ export default function MyRecipes() {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [router]);
 
   // mapping of recipes
   useEffect(() => {
